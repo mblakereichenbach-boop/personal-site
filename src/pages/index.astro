@@ -6,12 +6,21 @@ import Base from '../layouts/Base.astro';
   <!-- Hero -->
   <header class="hero">
     <div class="hero-inner">
-      <h1 class="hero-name">Blake Reichenbach</h1>
-      <div class="hero-accent-line" aria-hidden="true"></div>
-      <p class="hero-tagline">
-        I'm drawn to curiosity and intention. Whether it's software, essays, fiction,
-        or a cabin in the Appalachian foothills — the common thread is a commitment to craft.
-      </p>
+      <div class="hero-text">
+        <h1 class="hero-name">Blake Reichenbach</h1>
+        <div class="hero-accent-line" aria-hidden="true"></div>
+        <p class="hero-tagline">
+          I'm drawn to curiosity and intention. Whether it's software, essays, fiction,
+          or a cabin in the Appalachian foothills — the common thread is a commitment to craft.
+        </p>
+      </div>
+      <div class="hero-photo-wrap">
+        <img
+          src="/images/blake.jpg"
+          alt="Blake Reichenbach"
+          class="hero-photo"
+        />
+      </div>
     </div>
   </header>
 
@@ -28,28 +37,18 @@ import Base from '../layouts/Base.astro';
           <span class="sr-only">Blake Reichenbach</span>
         </h2>
 
-        <!-- Two-column intro: photo + first two paragraphs -->
-        <div class="about-intro">
-          <figure class="about-photo-wrap">
-            <img
-              src="/images/blake.jpg"
-              alt="Blake Reichenbach walking his dog in downtown Berea, Kentucky"
-              class="about-photo"
-            />
-          </figure>
-          <div class="about-text-lead">
-            <p>
-              I'm a product manager by trade and a writer by compulsion, which means I spend a lot
-              of time thinking about why things are built the way they are — and whether they could
-              be better.
-            </p>
-            <p>
-              As a PM, I've spent my career on ambitious, zero-to-one launches. The work I'm most
-              proud of starts with genuine curiosity about what people actually need — not what they
-              say they want, not what's easiest to build — and ends with something that earns their
-              trust. I think of that as product taste: the ability to turn empathy into decisions.
-            </p>
-          </div>
+        <div class="about-body">
+          <p>
+            I'm a product manager by trade and a writer by compulsion, which means I spend a lot
+            of time thinking about why things are built the way they are — and whether they could
+            be better.
+          </p>
+          <p>
+            As a PM, I've spent my career on ambitious, zero-to-one launches. The work I'm most
+            proud of starts with genuine curiosity about what people actually need — not what they
+            say they want, not what's easiest to build — and ends with something that earns their
+            trust. I think of that as product taste: the ability to turn empathy into decisions.
+          </p>
         </div>
 
         <!-- Pull quote -->
@@ -57,7 +56,6 @@ import Base from '../layouts/Base.astro';
           "Product taste: the ability to turn empathy into decisions."
         </blockquote>
 
-        <!-- Remaining paragraphs -->
         <div class="about-body">
           <p>
             That same instinct shows up everywhere else. PRactical exists because I saw a gap in
@@ -93,8 +91,11 @@ import Base from '../layouts/Base.astro';
 
           <!-- Non-Slop Fun -->
           <article class="project-card">
-            <div class="card-media card-media--terra" aria-hidden="true">
-              <span class="card-media-monogram">N</span>
+            <div class="card-media">
+              <img
+                src="/images/nonslop.png"
+                alt="Non-Slop Fun — a collage illustration of a figure in a suit holding coffee"
+              />
             </div>
             <div class="card-content">
               <span class="card-tag">Newsletter</span>
@@ -139,8 +140,11 @@ import Base from '../layouts/Base.astro';
 
           <!-- Creator's Hearth -->
           <article class="project-card">
-            <div class="card-media card-media--olive" aria-hidden="true">
-              <span class="card-media-monogram">C</span>
+            <div class="card-media">
+              <img
+                src="/images/creators-hearth.png"
+                alt="Creator's Hearth — a watercolor fireplace logo"
+              />
             </div>
             <div class="card-content">
               <span class="card-tag">Writing &amp; Craft</span>
@@ -170,6 +174,69 @@ import Base from '../layouts/Base.astro';
               </p>
               <span class="card-cta-disabled">Bookings Coming Soon</span>
             </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Professional Work -->
+    <section class="section work" id="work" aria-labelledby="work-heading">
+      <div class="section-inner">
+        <h2 id="work-heading">
+          <span class="section-label">Product Work</span>
+        </h2>
+        <p class="work-intro">
+          Selected work from my time as a Product Manager at HubSpot.
+        </p>
+        <div class="work-grid">
+
+          <article class="work-card">
+            <span class="work-employer">HubSpot &middot; Trust &amp; Safety</span>
+            <h3 class="work-title">Fraud Detection &amp; ML Modernization</h3>
+            <p class="work-description">
+              Overhauled fraud detection in Trust &amp; Safety to leverage machine learning.
+              Maintained accuracy and precision across key threat detection categories while laying
+              the groundwork to shift from reactive to proactive modeling.
+            </p>
+          </article>
+
+          <article class="work-card">
+            <span class="work-employer">HubSpot &middot; Policy &amp; Compliance</span>
+            <h3 class="work-title">Digital Services Act Compliance</h3>
+            <p class="work-description">
+              Designed HubSpot's product strategy for complying with the EU Digital Services Act —
+              navigating the intersection of regulatory requirements, platform architecture, and
+              user experience at scale.
+            </p>
+          </article>
+
+          <article class="work-card">
+            <span class="work-employer">HubSpot &middot; Content Hub</span>
+            <h3 class="work-title">Content Remix</h3>
+            <p class="work-description">
+              Launched Content Remix as part of the creation of Content Hub, quickly establishing
+              the tool as a flagship AI product within HubSpot's portfolio.
+            </p>
+          </article>
+
+          <article class="work-card">
+            <span class="work-employer">HubSpot &middot; Search &amp; Discovery</span>
+            <h3 class="work-title">Answer Engine Optimization (AEO)</h3>
+            <p class="work-description">
+              Launched HubSpot's AEO v1 feature set, setting the stage for the acquisition of
+              XFunnel and the re-release of the v2 tools currently on the market.
+            </p>
+          </article>
+
+          <article class="work-card work-card--full">
+            <span class="work-employer">HubSpot &middot; Social</span>
+            <h3 class="work-title">Social Insights</h3>
+            <p class="work-description">
+              Conceptualized and launched HubSpot's Social Insights framework, built on Reddit
+              data, to help brands extract meaningful audience and competitive insights from across
+              the internet to inform their marketing strategies.
+            </p>
           </article>
 
         </div>
@@ -255,12 +322,16 @@ import Base from '../layouts/Base.astro';
   .hero {
     background-color: var(--color-hero-bg);
     color: var(--color-hero-text);
-    padding: 7rem 2rem 6rem;
+    padding: 4rem 2rem 3.5rem;
   }
 
   .hero-inner {
-    max-width: 720px;
+    max-width: 760px;
     margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 200px;
+    gap: 3rem;
+    align-items: center;
   }
 
   .hero-name {
@@ -285,8 +356,24 @@ import Base from '../layouts/Base.astro';
     font-style: italic;
     font-weight: 300;
     color: var(--color-hero-muted);
-    max-width: 560px;
+    max-width: 460px;
     line-height: 1.7;
+  }
+
+  .hero-photo-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .hero-photo {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: 25% 30%;
+    border: 2px solid rgba(196, 120, 58, 0.4);
+    display: block;
   }
 
   /* ── Gradient bar ── */
@@ -316,39 +403,6 @@ import Base from '../layouts/Base.astro';
   /* ── About ── */
   .about {
     background-color: var(--color-bg);
-    padding-top: 3.5rem;
-  }
-
-  .about-intro {
-    display: grid;
-    grid-template-columns: 240px 1fr;
-    gap: 3rem;
-    align-items: start;
-    margin-bottom: 2.5rem;
-  }
-
-  .about-photo-wrap {
-    margin: 0;
-  }
-
-  .about-photo {
-    width: 100%;
-    aspect-ratio: 3 / 4;
-    object-fit: cover;
-    object-position: center 15%;
-    border-radius: 2px;
-    display: block;
-  }
-
-  .about-text-lead {
-    display: flex;
-    flex-direction: column;
-    gap: 1.4rem;
-    font-family: var(--font-body);
-    font-size: 17px;
-    color: var(--color-ink);
-    line-height: 1.8;
-    padding-top: 0.25rem;
   }
 
   .pull-quote {
@@ -359,7 +413,7 @@ import Base from '../layouts/Base.astro';
     color: var(--color-ink);
     border-left: 3px solid var(--color-accent-terra);
     padding: 0.25rem 0 0.25rem 1.5rem;
-    margin: 0 0 2.5rem 0;
+    margin: 2.5rem 0;
     max-width: 620px;
     line-height: 1.55;
     quotes: none;
@@ -515,6 +569,66 @@ import Base from '../layouts/Base.astro';
     opacity: 0.7;
   }
 
+  /* ── Professional Work ── */
+  .work {
+    background-color: var(--color-bg);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .work-intro {
+    font-family: var(--font-ui);
+    font-size: 13px;
+    color: var(--color-ink-light);
+    margin-bottom: 2rem;
+    letter-spacing: 0.02em;
+  }
+
+  .work-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+
+  .work-card {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-left: 3px solid var(--color-ink);
+    border-radius: 0 4px 4px 0;
+    padding: 24px 24px 24px 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .work-card--full {
+    grid-column: 1 / -1;
+  }
+
+  .work-employer {
+    font-family: var(--font-ui);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-ink-light);
+  }
+
+  .work-title {
+    font-family: var(--font-heading);
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--color-ink);
+    line-height: 1.25;
+  }
+
+  .work-description {
+    font-family: var(--font-body);
+    font-size: 15px;
+    color: var(--color-ink-light);
+    line-height: 1.7;
+    margin-top: 0.2rem;
+  }
+
   /* ── Contact ── */
   .contact {
     background-color: var(--color-bg);
@@ -641,36 +755,39 @@ import Base from '../layouts/Base.astro';
   /* ── Responsive ── */
   @media (max-width: 700px) {
     .hero {
-      padding: 5rem 1.5rem 4rem;
+      padding: 3rem 1.5rem 2.5rem;
+    }
+
+    .hero-inner {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .hero-photo {
+      width: 160px;
+      height: 160px;
+    }
+
+    .hero-photo-wrap {
+      order: -1;
     }
 
     .section {
-      padding: 3.5rem 1.5rem;
-    }
-
-    .about {
-      padding-top: 3rem;
-    }
-
-    /* Stack photo above text on mobile */
-    .about-intro {
-      grid-template-columns: 1fr;
-      gap: 1.75rem;
-    }
-
-    .about-photo {
-      aspect-ratio: 4 / 3;
-      max-height: 300px;
-      object-position: center 20%;
+      padding: 3rem 1.5rem;
     }
 
     .pull-quote {
       font-size: 18px;
     }
 
-    /* Single-column card grid on mobile */
-    .projects-grid {
+    /* Single-column grids on mobile */
+    .projects-grid,
+    .work-grid {
       grid-template-columns: 1fr;
+    }
+
+    .work-card--full {
+      grid-column: 1;
     }
 
     .footer-inner {
