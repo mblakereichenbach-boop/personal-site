@@ -15,8 +15,9 @@ import Base from '../layouts/Base.astro';
     </div>
   </header>
 
-  <!-- Gradient accent bar -->
+  <!-- Gradient accent bar + diagonal wedge transition -->
   <div class="gradient-bar" aria-hidden="true"></div>
+  <div class="section-wedge" aria-hidden="true"></div>
 
   <main>
     <!-- About -->
@@ -26,35 +27,57 @@ import Base from '../layouts/Base.astro';
           <span class="section-label">About</span>
           <span class="sr-only">Blake Reichenbach</span>
         </h2>
+
+        <!-- Two-column intro: photo + first two paragraphs -->
+        <div class="about-intro">
+          <figure class="about-photo-wrap">
+            <img
+              src="/images/blake.jpg"
+              alt="Blake Reichenbach walking his dog in downtown Berea, Kentucky"
+              class="about-photo"
+            />
+          </figure>
+          <div class="about-text-lead">
+            <p>
+              I'm a product manager by trade and a writer by compulsion, which means I spend a lot
+              of time thinking about why things are built the way they are — and whether they could
+              be better.
+            </p>
+            <p>
+              As a PM, I've spent my career on ambitious, zero-to-one launches. The work I'm most
+              proud of starts with genuine curiosity about what people actually need — not what they
+              say they want, not what's easiest to build — and ends with something that earns their
+              trust. I think of that as product taste: the ability to turn empathy into decisions.
+            </p>
+          </div>
+        </div>
+
+        <!-- Pull quote -->
+        <blockquote class="pull-quote">
+          "Product taste: the ability to turn empathy into decisions."
+        </blockquote>
+
+        <!-- Remaining paragraphs -->
         <div class="about-body">
           <p>
-            I'm a product manager by trade and a writer by compulsion, which means I spend a lot of time
-            thinking about why things are built the way they are — and whether they could be better.
+            That same instinct shows up everywhere else. PRactical exists because I saw a gap in
+            the market for a workout tracker that respects the user's intelligence — no bloat, no
+            dark patterns, just a clean tool that does exactly what it promises. Non-Slop Fun
+            exists because I believe the well-examined life is worth writing about, and that
+            genuine creative and cultural commentary is an act of resistance against the default
+            mode of mindless scrolling. The Berea Writers Cabin exists because a space should mean
+            something — it should invite the kind of thinking that doesn't happen on a laptop screen.
           </p>
           <p>
-            As a PM, I've spent my career on ambitious, zero-to-one launches. The work I'm most proud of
-            starts with genuine curiosity about what people actually need — not what they say they want,
-            not what's easiest to build — and ends with something that earns their trust. I think of that
-            as product taste: the ability to turn empathy into decisions.
+            I'm based in Kentucky. I'm a certified personal trainer who mostly just trains himself.
+            I'm working on two novels — an Appalachian dark fantasy about ecology, class, and what
+            it means to come home, and a high fantasy rooted in the mythology of gods and the people
+            who live in their shadow. Both are works in progress, which feels like the right place
+            for them to be.
           </p>
           <p>
-            That same instinct shows up everywhere else. PRactical exists because I saw a gap in the market
-            for a workout tracker that respects the user's intelligence — no bloat, no dark patterns, just
-            a clean tool that does exactly what it promises. Non-Slop Fun exists because I believe the
-            well-examined life is worth writing about, and that genuine creative and cultural commentary is
-            an act of resistance against the default mode of mindless scrolling. The Berea Writers Cabin
-            exists because a space should mean something — it should invite the kind of thinking that
-            doesn't happen on a laptop screen.
-          </p>
-          <p>
-            I'm based in Kentucky. I'm a certified personal trainer who mostly just trains himself. I'm
-            working on two novels — an Appalachian dark fantasy about ecology, class, and what it means to
-            come home, and a high fantasy rooted in the mythology of gods and the people who live in their
-            shadow. Both are works in progress, which feels like the right place for them to be.
-          </p>
-          <p>
-            If you've landed here, you're probably curious, you make things, and you're a little skeptical
-            of anything that was built to game your attention rather than earn it. Welcome.
+            If you've landed here, you're probably curious, you make things, and you're a little
+            skeptical of anything that was built to game your attention rather than earn it. Welcome.
           </p>
         </div>
       </div>
@@ -68,55 +91,85 @@ import Base from '../layouts/Base.astro';
         </h2>
         <div class="projects-grid">
 
+          <!-- Non-Slop Fun -->
           <article class="project-card">
-            <span class="card-tag">Newsletter</span>
-            <h3 class="card-title">Non-Slop Fun</h3>
-            <p class="card-description">
-              Reflection is resistance. Non-Slop Fun is a newsletter about creative and cultural
-              commentary — examining the things worth examining, and celebrating the well-examined life.
-            </p>
-            <a
-              href="https://www.nonslopfun.com"
-              class="card-cta"
-              target="_blank"
-              rel="noopener noreferrer"
-            >Read it &rarr;</a>
+            <div class="card-media card-media--terra" aria-hidden="true">
+              <span class="card-media-monogram">N</span>
+            </div>
+            <div class="card-content">
+              <span class="card-tag">Newsletter</span>
+              <h3 class="card-title">Non-Slop Fun</h3>
+              <p class="card-description">
+                Reflection is resistance. Non-Slop Fun is a newsletter about creative and cultural
+                commentary — examining the things worth examining, and celebrating the well-examined life.
+              </p>
+              <a
+                href="https://www.nonslopfun.com"
+                class="card-cta"
+                target="_blank"
+                rel="noopener noreferrer"
+              >Read it &rarr;</a>
+            </div>
           </article>
 
+          <!-- PRactical Workouts -->
           <article class="project-card">
-            <span class="card-tag">iOS App</span>
-            <h3 class="card-title">PRactical Workouts</h3>
-            <p class="card-description">
-              A workout tracker for lifters who want a clean, intelligent tool without the bloat.
-              No social features, no AI gimmicks — just straightforward progressive overload tracking
-              done right.
-            </p>
-            <a
-              href="https://www.practicalworkouts.com"
-              class="card-cta"
-              target="_blank"
-              rel="noopener noreferrer"
-            >Download &rarr;</a>
+            <div class="card-media card-media--app">
+              <img
+                src="/images/practical.png"
+                alt="PRactical Workouts app home screen showing weekly training stats and goals"
+              />
+            </div>
+            <div class="card-content">
+              <span class="card-tag">iOS App</span>
+              <h3 class="card-title">PRactical Workouts</h3>
+              <p class="card-description">
+                A workout tracker for lifters who want a clean, intelligent tool without the bloat.
+                No social features, no AI gimmicks — just straightforward progressive overload
+                tracking done right.
+              </p>
+              <a
+                href="https://www.practicalworkouts.com"
+                class="card-cta"
+                target="_blank"
+                rel="noopener noreferrer"
+              >Download &rarr;</a>
+            </div>
           </article>
 
+          <!-- Creator's Hearth -->
           <article class="project-card">
-            <span class="card-tag">Writing &amp; Craft</span>
-            <h3 class="card-title">Creator's Hearth</h3>
-            <p class="card-description">
-              A niche site for writers who take the craft seriously. Practical guidance, honest takes,
-              and a growing library of resources for fiction writers at every stage.
-            </p>
-            <a href="#" class="card-cta">Visit &rarr;</a>
+            <div class="card-media card-media--olive" aria-hidden="true">
+              <span class="card-media-monogram">C</span>
+            </div>
+            <div class="card-content">
+              <span class="card-tag">Writing &amp; Craft</span>
+              <h3 class="card-title">Creator's Hearth</h3>
+              <p class="card-description">
+                A niche site for writers who take the craft seriously. Practical guidance, honest
+                takes, and a growing library of resources for fiction writers at every stage.
+              </p>
+              <a href="#" class="card-cta">Visit &rarr;</a>
+            </div>
           </article>
 
+          <!-- Berea Writers Cabin -->
           <article class="project-card">
-            <span class="card-tag">Short-Term Rental · Berea, KY</span>
-            <h3 class="card-title">Berea Writers Cabin</h3>
-            <p class="card-description">
-              A creative retreat in the Appalachian foothills, steeped in regional charm and designed
-              for the kind of thinking that requires a change of scenery.
-            </p>
-            <span class="card-cta-disabled">Bookings Coming Soon</span>
+            <div class="card-media card-media--photo">
+              <img
+                src="/images/cabin.jpg"
+                alt="The Berea Writers Cabin — a rustic retreat with a waterwheel nestled in the Appalachian foothills"
+              />
+            </div>
+            <div class="card-content">
+              <span class="card-tag">Short-Term Rental · Berea, KY</span>
+              <h3 class="card-title">Berea Writers Cabin</h3>
+              <p class="card-description">
+                A creative retreat in the Appalachian foothills, steeped in regional charm and
+                designed for the kind of thinking that requires a change of scenery.
+              </p>
+              <span class="card-cta-disabled">Bookings Coming Soon</span>
+            </div>
           </article>
 
         </div>
@@ -243,6 +296,13 @@ import Base from '../layouts/Base.astro';
     background: linear-gradient(90deg, #c4783a, #8a6a3a, #4a6e3a);
   }
 
+  /* ── Diagonal wedge transition ── */
+  .section-wedge {
+    height: 56px;
+    background: var(--color-hero-bg);
+    clip-path: polygon(0 0, 100% 0, 0 100%);
+  }
+
   /* ── Shared section layout ── */
   .section {
     padding: 5rem 2rem;
@@ -256,6 +316,53 @@ import Base from '../layouts/Base.astro';
   /* ── About ── */
   .about {
     background-color: var(--color-bg);
+    padding-top: 3.5rem;
+  }
+
+  .about-intro {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 3rem;
+    align-items: start;
+    margin-bottom: 2.5rem;
+  }
+
+  .about-photo-wrap {
+    margin: 0;
+  }
+
+  .about-photo {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+    object-position: center 15%;
+    border-radius: 2px;
+    display: block;
+  }
+
+  .about-text-lead {
+    display: flex;
+    flex-direction: column;
+    gap: 1.4rem;
+    font-family: var(--font-body);
+    font-size: 17px;
+    color: var(--color-ink);
+    line-height: 1.8;
+    padding-top: 0.25rem;
+  }
+
+  .pull-quote {
+    font-family: var(--font-heading);
+    font-size: clamp(20px, 2.6vw, 26px);
+    font-style: italic;
+    font-weight: 400;
+    color: var(--color-ink);
+    border-left: 3px solid var(--color-accent-terra);
+    padding: 0.25rem 0 0.25rem 1.5rem;
+    margin: 0 0 2.5rem 0;
+    max-width: 620px;
+    line-height: 1.55;
+    quotes: none;
   }
 
   .about-body {
@@ -286,10 +393,76 @@ import Base from '../layouts/Base.astro';
     border: 1px solid var(--color-border);
     border-radius: 4px;
     box-shadow: 0 2px 8px rgba(42, 34, 24, 0.06);
-    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  /* Card media area (image or decorative header) */
+  .card-media {
+    height: 190px;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  .card-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    display: block;
+  }
+
+  /* App screenshot: show the top of the UI */
+  .card-media--app img {
+    object-position: top center;
+  }
+
+  /* Cabin photo: center vertically */
+  .card-media--photo img {
+    object-position: center center;
+  }
+
+  /* Decorative monogram headers */
+  .card-media--terra {
+    background-color: #f5e4d0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .card-media--olive {
+    background-color: #e4ede0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .card-media-monogram {
+    font-family: var(--font-heading);
+    font-size: 96px;
+    font-weight: 700;
+    line-height: 1;
+    user-select: none;
+  }
+
+  .card-media--terra .card-media-monogram {
+    color: var(--color-accent-terra);
+    opacity: 0.22;
+  }
+
+  .card-media--olive .card-media-monogram {
+    color: var(--color-accent-olive);
+    opacity: 0.22;
+  }
+
+  /* Card text content */
+  .card-content {
+    padding: 20px 24px 24px;
     display: flex;
     flex-direction: column;
     gap: 0.6rem;
+    flex: 1;
   }
 
   .card-tag {
@@ -466,7 +639,7 @@ import Base from '../layouts/Base.astro';
   }
 
   /* ── Responsive ── */
-  @media (max-width: 640px) {
+  @media (max-width: 700px) {
     .hero {
       padding: 5rem 1.5rem 4rem;
     }
@@ -475,6 +648,27 @@ import Base from '../layouts/Base.astro';
       padding: 3.5rem 1.5rem;
     }
 
+    .about {
+      padding-top: 3rem;
+    }
+
+    /* Stack photo above text on mobile */
+    .about-intro {
+      grid-template-columns: 1fr;
+      gap: 1.75rem;
+    }
+
+    .about-photo {
+      aspect-ratio: 4 / 3;
+      max-height: 300px;
+      object-position: center 20%;
+    }
+
+    .pull-quote {
+      font-size: 18px;
+    }
+
+    /* Single-column card grid on mobile */
     .projects-grid {
       grid-template-columns: 1fr;
     }
