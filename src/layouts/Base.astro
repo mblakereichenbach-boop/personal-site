@@ -1,0 +1,117 @@
+---
+export interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "Blake Reichenbach",
+  description = "Product manager, writer, and builder of things. Creator of PRactical Workouts, Non-Slop Fun, and the Berea Writers Cabin.",
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content="Blake Reichenbach" />
+    <meta property="og:description" content="Product manager, writer, and builder of things." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://blakereichenbach.com" />
+    <link rel="canonical" href="https://blakereichenbach.com" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300&family=DM+Sans:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style is:global>
+      /* CSS Custom Properties */
+      :root {
+        --color-bg: #f2ede6;
+        --color-surface: #ffffff;
+        --color-ink: #2a2218;
+        --color-ink-light: #6b5c4a;
+        --color-border: #ddd5c4;
+        --color-hero-bg: #2a2218;
+        --color-hero-text: #f2ede6;
+        --color-hero-muted: #b8a882;
+        --color-accent-terra: #c4783a;
+        --color-accent-olive: #4a6e3a;
+
+        --font-heading: 'Playfair Display', serif;
+        --font-body: 'Source Serif 4', serif;
+        --font-ui: 'DM Sans', sans-serif;
+      }
+
+      /* Reset */
+      *, *::before, *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background-color: var(--color-bg);
+        color: var(--color-ink);
+        font-family: var(--font-body);
+        font-size: 17px;
+        line-height: 1.8;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      img {
+        max-width: 100%;
+        display: block;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      /* Section label utility */
+      .section-label {
+        font-family: var(--font-ui);
+        font-size: 11px;
+        font-weight: 500;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--color-hero-muted);
+        display: block;
+        margin-bottom: 1.5rem;
+      }
+
+      /* Visually hidden utility for screen readers */
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
