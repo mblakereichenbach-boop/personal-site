@@ -3,41 +3,37 @@ import Base from '../layouts/Base.astro';
 ---
 
 <Base>
-  <!-- Hero -->
-  <header class="hero">
-    <div class="hero-inner">
-      <div class="hero-text">
-        <h1 class="hero-name">Blake Reichenbach</h1>
-        <div class="hero-accent-line" aria-hidden="true"></div>
-        <p class="hero-tagline">
-          I'm drawn to curiosity and intention. Whether it's software, essays, fiction,
-          or a cabin in the Appalachian foothills — the common thread is a commitment to craft.
-        </p>
-      </div>
-      <div class="hero-photo-wrap">
-        <img
-          src="/images/blake.jpg"
-          alt="Blake Reichenbach"
-          class="hero-photo"
-        />
-      </div>
-    </div>
-  </header>
+  <div class="shelf" role="main">
 
-  <!-- Gradient accent bar + diagonal wedge transition -->
-  <div class="gradient-bar" aria-hidden="true"></div>
-  <div class="section-wedge" aria-hidden="true"></div>
+    <!-- Cover -->
+    <article class="book" id="book-cover" data-open="true">
+      <button class="book-spine" aria-controls="page-cover" aria-expanded="true" aria-label="Home">
+        Blake Reichenbach
+      </button>
+      <div class="book-page cover-page" id="page-cover">
+        <div class="cover-inner">
+          <img src="/images/blake.jpg" alt="Blake Reichenbach" class="cover-photo" />
+          <h1 class="cover-name">Blake<br />Reichenbach</h1>
+          <div class="cover-rule" aria-hidden="true"></div>
+          <p class="cover-tagline">
+            Product manager, writer, and builder of things drawn to curiosity and craft.
+          </p>
+          <p class="cover-hint" aria-hidden="true">select a volume to explore &rarr;</p>
+        </div>
+      </div>
+    </article>
 
-  <main>
     <!-- About -->
-    <section class="section about" id="about" aria-labelledby="about-heading">
-      <div class="section-inner">
-        <h2 id="about-heading">
-          <span class="section-label">About</span>
-          <span class="sr-only">Blake Reichenbach</span>
-        </h2>
-
-        <div class="about-body">
+    <article class="book" id="book-about">
+      <button class="book-spine" aria-controls="page-about" aria-expanded="false" aria-label="About">
+        About
+      </button>
+      <div class="book-page text-page" id="page-about" aria-hidden="true">
+        <div class="page-header">
+          <span class="chapter-num" aria-hidden="true">I</span>
+          <h2 class="chapter-title">About</h2>
+        </div>
+        <div class="page-body">
           <p>
             I'm a product manager by trade and a writer by compulsion, which means I spend a lot
             of time thinking about why things are built the way they are — and whether they could
@@ -49,16 +45,11 @@ import Base from '../layouts/Base.astro';
             say they want, not what's easiest to build — and ends with something that earns their
             trust. I think of that as product taste: the ability to turn empathy into decisions.
           </p>
-        </div>
-
-        <!-- Pull quote -->
-        <blockquote class="pull-quote">
-          "Product taste: the ability to turn empathy into decisions."
-        </blockquote>
-
-        <div class="about-body">
+          <blockquote class="pull-quote">
+            "Product taste: the ability to turn empathy into decisions."
+          </blockquote>
           <p>
-            That same instinct shows up everywhere else. PRactical exists because I saw a gap in
+            That same instinct shows up everywhere. PRactical exists because I saw a gap in
             the market for a workout tracker that respects the user's intelligence — no bloat, no
             dark patterns, just a clean tool that does exactly what it promises. Non-Slop Fun
             exists because I believe the well-examined life is worth writing about, and that
@@ -79,474 +70,555 @@ import Base from '../layouts/Base.astro';
           </p>
         </div>
       </div>
-    </section>
+    </article>
 
-    <!-- Projects -->
-    <section class="section projects" id="projects" aria-labelledby="projects-heading">
-      <div class="section-inner">
-        <h2 id="projects-heading">
-          <span class="section-label">Projects</span>
-        </h2>
-        <div class="projects-grid">
-
-          <!-- Non-Slop Fun -->
-          <article class="project-card">
-            <div class="card-media">
-              <img
-                src="/images/nonslop.png"
-                alt="Non-Slop Fun — a collage illustration of a figure in a suit holding coffee"
-              />
-            </div>
-            <div class="card-content">
-              <span class="card-tag">Newsletter</span>
-              <h3 class="card-title">Non-Slop Fun</h3>
-              <p class="card-description">
-                Reflection is resistance. Non-Slop Fun is a newsletter about creative and cultural
-                commentary — examining the things worth examining, and celebrating the well-examined life.
-              </p>
-              <a
-                href="https://www.nonslopfun.com"
-                class="card-cta"
-                target="_blank"
-                rel="noopener noreferrer"
-              >Read it &rarr;</a>
-            </div>
-          </article>
-
-          <!-- PRactical Workouts -->
-          <article class="project-card">
-            <div class="card-media card-media--app">
-              <img
-                src="/images/practical.png"
-                alt="PRactical Workouts app home screen showing weekly training stats and goals"
-              />
-            </div>
-            <div class="card-content">
-              <span class="card-tag">iOS App</span>
-              <h3 class="card-title">PRactical Workouts</h3>
-              <p class="card-description">
-                A workout tracker for lifters who want a clean, intelligent tool without the bloat.
-                No social features, no AI gimmicks — just straightforward progressive overload
-                tracking done right.
-              </p>
-              <a
-                href="https://www.practicalworkouts.com"
-                class="card-cta"
-                target="_blank"
-                rel="noopener noreferrer"
-              >Download &rarr;</a>
-            </div>
-          </article>
-
-          <!-- Creator's Hearth -->
-          <article class="project-card">
-            <div class="card-media">
-              <img
-                src="/images/creators-hearth.png"
-                alt="Creator's Hearth — a watercolor fireplace logo"
-              />
-            </div>
-            <div class="card-content">
-              <span class="card-tag">Writing &amp; Craft</span>
-              <h3 class="card-title">Creator's Hearth</h3>
-              <p class="card-description">
-                A niche site for writers who take the craft seriously. Practical guidance, honest
-                takes, and a growing library of resources for fiction writers at every stage.
-              </p>
-              <a href="#" class="card-cta">Visit &rarr;</a>
-            </div>
-          </article>
-
-          <!-- Berea Writers Cabin -->
-          <article class="project-card">
-            <div class="card-media card-media--photo">
-              <img
-                src="/images/cabin.jpg"
-                alt="The Berea Writers Cabin — a rustic retreat with a waterwheel nestled in the Appalachian foothills"
-              />
-            </div>
-            <div class="card-content">
-              <span class="card-tag">Short-Term Rental · Berea, KY</span>
-              <h3 class="card-title">Berea Writers Cabin</h3>
-              <p class="card-description">
-                A creative retreat in the Appalachian foothills, steeped in regional charm and
-                designed for the kind of thinking that requires a change of scenery.
-              </p>
-              <span class="card-cta-disabled">Bookings Coming Soon</span>
-            </div>
-          </article>
-
+    <!-- Non-Slop Fun -->
+    <article class="book" id="book-nonslopfun">
+      <button class="book-spine" aria-controls="page-nonslopfun" aria-expanded="false" aria-label="Non-Slop Fun newsletter">
+        Non-Slop Fun
+      </button>
+      <div class="book-page project-page" id="page-nonslopfun" aria-hidden="true">
+        <div class="project-frontispiece">
+          <img src="/images/nonslop.png" alt="Non-Slop Fun — a collage illustration of a figure in a suit holding coffee" />
+        </div>
+        <div class="project-body">
+          <span class="project-tag">Newsletter</span>
+          <h2 class="project-title">Non-Slop Fun</h2>
+          <p class="project-desc">
+            Reflection is resistance. Non-Slop Fun is a newsletter about creative and cultural
+            commentary — examining the things worth examining, and celebrating the well-examined life.
+          </p>
+          <a href="https://www.nonslopfun.com" class="project-cta" target="_blank" rel="noopener noreferrer">
+            Read it &rarr;
+          </a>
         </div>
       </div>
-    </section>
+    </article>
 
-    <!-- Professional Work -->
-    <section class="section work" id="work" aria-labelledby="work-heading">
-      <div class="section-inner">
-        <h2 id="work-heading">
-          <span class="section-label">Product Work</span>
-        </h2>
-        <p class="work-intro">
-          Selected work from my time as a Product Manager at HubSpot.
-        </p>
-        <div class="work-grid">
+    <!-- PRactical Workouts -->
+    <article class="book" id="book-practical">
+      <button class="book-spine" aria-controls="page-practical" aria-expanded="false" aria-label="PRactical Workouts iOS app">
+        PRactical
+      </button>
+      <div class="book-page project-page" id="page-practical" aria-hidden="true">
+        <div class="project-frontispiece project-frontispiece--app">
+          <img src="/images/practical.png" alt="PRactical Workouts app home screen showing weekly training stats" />
+        </div>
+        <div class="project-body">
+          <span class="project-tag">iOS App</span>
+          <h2 class="project-title">PRactical Workouts</h2>
+          <p class="project-desc">
+            A workout tracker for lifters who want a clean, intelligent tool without the bloat.
+            No social features, no AI gimmicks — just straightforward progressive overload
+            tracking done right.
+          </p>
+          <a href="https://www.practicalworkouts.com" class="project-cta" target="_blank" rel="noopener noreferrer">
+            Download &rarr;
+          </a>
+        </div>
+      </div>
+    </article>
 
-          <article class="work-card">
+    <!-- Creator's Hearth -->
+    <article class="book" id="book-hearth">
+      <button class="book-spine" aria-controls="page-hearth" aria-expanded="false" aria-label="Creator's Hearth writing site">
+        Creator's Hearth
+      </button>
+      <div class="book-page project-page" id="page-hearth" aria-hidden="true">
+        <div class="project-frontispiece">
+          <img src="/images/creators-hearth.png" alt="Creator's Hearth — a watercolor fireplace logo" />
+        </div>
+        <div class="project-body">
+          <span class="project-tag">Writing &amp; Craft</span>
+          <h2 class="project-title">Creator's Hearth</h2>
+          <p class="project-desc">
+            A niche site for writers who take the craft seriously. Practical guidance, honest
+            takes, and a growing library of resources for fiction writers at every stage.
+          </p>
+          <a href="#" class="project-cta">Visit &rarr;</a>
+        </div>
+      </div>
+    </article>
+
+    <!-- Berea Writers Cabin -->
+    <article class="book" id="book-cabin">
+      <button class="book-spine" aria-controls="page-cabin" aria-expanded="false" aria-label="Berea Writers Cabin short-term rental">
+        Berea Writers Cabin
+      </button>
+      <div class="book-page project-page" id="page-cabin" aria-hidden="true">
+        <div class="project-frontispiece project-frontispiece--photo">
+          <img src="/images/cabin.jpg" alt="The Berea Writers Cabin nestled in the Appalachian foothills" />
+        </div>
+        <div class="project-body">
+          <span class="project-tag">Short-Term Rental &middot; Berea, KY</span>
+          <h2 class="project-title">Berea Writers Cabin</h2>
+          <p class="project-desc">
+            A creative retreat in the Appalachian foothills, steeped in regional charm and
+            designed for the kind of thinking that requires a change of scenery.
+          </p>
+          <span class="project-cta-disabled">Bookings Coming Soon</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- Product Work -->
+    <article class="book" id="book-work">
+      <button class="book-spine" aria-controls="page-work" aria-expanded="false" aria-label="Product work">
+        Product Work
+      </button>
+      <div class="book-page text-page" id="page-work" aria-hidden="true">
+        <div class="page-header">
+          <span class="chapter-num" aria-hidden="true">II</span>
+          <h2 class="chapter-title">Product Work</h2>
+        </div>
+        <p class="work-intro">Selected work from my time as a Product Manager at HubSpot.</p>
+        <div class="work-list">
+
+          <div class="work-entry">
             <span class="work-employer">HubSpot &middot; Trust &amp; Safety</span>
             <h3 class="work-title">Fraud Detection &amp; ML Modernization</h3>
-            <p class="work-description">
+            <p class="work-desc">
               Overhauled fraud detection in Trust &amp; Safety to leverage machine learning.
               Maintained accuracy and precision across key threat detection categories while laying
               the groundwork to shift from reactive to proactive modeling.
             </p>
-          </article>
+          </div>
 
-          <article class="work-card">
+          <div class="work-entry">
             <span class="work-employer">HubSpot &middot; Policy &amp; Compliance</span>
             <h3 class="work-title">Digital Services Act Compliance</h3>
-            <p class="work-description">
+            <p class="work-desc">
               Designed HubSpot's product strategy for complying with the EU Digital Services Act —
               navigating the intersection of regulatory requirements, platform architecture, and
               user experience at scale.
             </p>
-          </article>
+          </div>
 
-          <article class="work-card">
+          <div class="work-entry">
             <span class="work-employer">HubSpot &middot; Content Hub</span>
             <h3 class="work-title">Content Remix</h3>
-            <p class="work-description">
+            <p class="work-desc">
               Launched Content Remix as part of the creation of Content Hub, quickly establishing
               the tool as a flagship AI product within HubSpot's portfolio.
             </p>
-          </article>
+          </div>
 
-          <article class="work-card">
+          <div class="work-entry">
             <span class="work-employer">HubSpot &middot; Search &amp; Discovery</span>
             <h3 class="work-title">Answer Engine Optimization (AEO)</h3>
-            <p class="work-description">
+            <p class="work-desc">
               Launched HubSpot's AEO v1 feature set, setting the stage for the acquisition of
               XFunnel and the re-release of the v2 tools currently on the market.
             </p>
-          </article>
+          </div>
 
-          <article class="work-card work-card--full">
+          <div class="work-entry">
             <span class="work-employer">HubSpot &middot; Social</span>
             <h3 class="work-title">Social Insights</h3>
-            <p class="work-description">
+            <p class="work-desc">
               Conceptualized and launched HubSpot's Social Insights framework, built on Reddit
               data, to help brands extract meaningful audience and competitive insights from across
               the internet to inform their marketing strategies.
             </p>
-          </article>
+          </div>
 
         </div>
       </div>
-    </section>
+    </article>
 
     <!-- Contact -->
-    <section class="section contact" id="contact" aria-labelledby="contact-heading">
-      <div class="section-inner">
-        <h2 id="contact-heading">
-          <span class="section-label">Get in Touch</span>
-        </h2>
-        <p class="contact-intro">
-          If something here resonated — or if you're thinking about working together — I'd love to
-          hear from you. Whether it's a consulting engagement, a creative collaboration, or just a
-          good conversation, feel free to reach out.
-        </p>
-        <form
-          name="contact"
-          method="POST"
-          data-netlify="true"
-          class="contact-form"
-          aria-label="Contact form"
-        >
-          <input type="hidden" name="form-name" value="contact" />
-
-          <div class="form-group">
-            <label for="name" class="form-label">Name</label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              required
-              autocomplete="name"
-              class="form-input"
-            />
-          </div>
-
-          <div class="form-group">
-            <label for="email" class="form-label">Email</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              required
-              autocomplete="email"
-              class="form-input"
-            />
-          </div>
-
-          <div class="form-group">
-            <label for="message" class="form-label">Message</label>
-            <textarea
-              id="message"
-              name="message"
-              required
-              rows="6"
-              class="form-input form-textarea"
-            ></textarea>
-          </div>
-
-          <button type="submit" class="form-submit">Send &rarr;</button>
-        </form>
+    <article class="book" id="book-contact">
+      <button class="book-spine" aria-controls="page-contact" aria-expanded="false" aria-label="Get in touch">
+        Get in Touch
+      </button>
+      <div class="book-page text-page" id="page-contact" aria-hidden="true">
+        <div class="page-header">
+          <span class="chapter-num" aria-hidden="true">III</span>
+          <h2 class="chapter-title">Get in Touch</h2>
+        </div>
+        <div class="page-body">
+          <p class="contact-intro">
+            If something here resonated — or if you're thinking about working together — I'd love to
+            hear from you. Whether it's a consulting engagement, a creative collaboration, or just a
+            good conversation, feel free to reach out.
+          </p>
+          <form
+            name="contact"
+            method="POST"
+            data-netlify="true"
+            class="contact-form"
+            aria-label="Contact form"
+          >
+            <input type="hidden" name="form-name" value="contact" />
+            <div class="form-group">
+              <label for="name" class="form-label">Name</label>
+              <input type="text" id="name" name="name" required autocomplete="name" class="form-input" />
+            </div>
+            <div class="form-group">
+              <label for="email" class="form-label">Email</label>
+              <input type="email" id="email" name="email" required autocomplete="email" class="form-input" />
+            </div>
+            <div class="form-group">
+              <label for="message" class="form-label">Message</label>
+              <textarea id="message" name="message" required rows="5" class="form-input form-textarea"></textarea>
+            </div>
+            <button type="submit" class="form-submit">Send &rarr;</button>
+          </form>
+        </div>
       </div>
-    </section>
-  </main>
+    </article>
 
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="footer-inner">
-      <span class="footer-copy">&copy; 2026 Blake Reichenbach</span>
-      <nav class="footer-links" aria-label="Project links">
-        <a href="https://www.nonslopfun.com" target="_blank" rel="noopener noreferrer">Non-Slop Fun</a>
-        <a href="https://www.practicalworkouts.com" target="_blank" rel="noopener noreferrer">PRactical Workouts</a>
-        <a href="#">Creator's Hearth</a>
-      </nav>
-    </div>
-  </footer>
+  </div>
+
+  <script>
+    const books = document.querySelectorAll<HTMLElement>('.book');
+
+    function openBook(target: HTMLElement) {
+      books.forEach(book => {
+        const isTarget = book === target;
+        const spine = book.querySelector('button')!;
+        const page  = book.querySelector('.book-page')!;
+
+        book.dataset.open = isTarget ? 'true' : 'false';
+        spine.setAttribute('aria-expanded', String(isTarget));
+        page.setAttribute('aria-hidden', String(!isTarget));
+      });
+    }
+
+    books.forEach(book => {
+      book.querySelector('button')!.addEventListener('click', () => {
+        if (book.dataset.open !== 'true') openBook(book);
+      });
+    });
+
+    document.addEventListener('keydown', e => {
+      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+      const all  = [...books];
+      const open = all.find(b => b.dataset.open === 'true');
+      if (!open) return;
+      const idx = all.indexOf(open);
+      if (e.key === 'ArrowRight' && idx < all.length - 1) openBook(all[idx + 1]);
+      if (e.key === 'ArrowLeft'  && idx > 0)              openBook(all[idx - 1]);
+    });
+  </script>
 </Base>
 
 <style>
-  /* ── Hero ── */
-  .hero {
-    background-color: var(--color-hero-bg);
-    color: var(--color-hero-text);
-    padding: 4rem 2rem 3.5rem;
-  }
-
-  .hero-inner {
-    max-width: 760px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1fr 200px;
-    gap: 3rem;
-    align-items: center;
-  }
-
-  .hero-name {
-    font-family: var(--font-heading);
-    font-size: clamp(36px, 6vw, 52px);
-    font-weight: 700;
-    color: var(--color-hero-text);
-    line-height: 1.15;
-    letter-spacing: -0.01em;
-  }
-
-  .hero-accent-line {
-    width: 32px;
-    height: 1px;
-    background-color: var(--color-accent-terra);
-    margin: 12px 0;
-  }
-
-  .hero-tagline {
-    font-family: var(--font-body);
-    font-size: clamp(16px, 2.5vw, 18px);
-    font-style: italic;
-    font-weight: 300;
-    color: var(--color-hero-muted);
-    max-width: 460px;
-    line-height: 1.7;
-  }
-
-  .hero-photo-wrap {
+  /* ── Shelf ── */
+  .shelf {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    height: 100dvh;
+    overflow: hidden;
+    background: #1a130c;
+    gap: 3px;
   }
 
-  .hero-photo {
-    width: 200px;
-    height: 200px;
+  /* ── Book ── */
+  .book {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    flex-shrink: 0;
+    width: 64px;
+    transition: width 500ms cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+  }
+
+  .book[data-open="true"] {
+    width: clamp(380px, 52vw, 680px);
+    flex-shrink: 1;
+  }
+
+  /* ── Spine ── */
+  .book-spine {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    transform: rotate(180deg);
+
+    position: relative;
+    flex-shrink: 0;
+    width: 64px;
+    height: 100%;
+    padding: 2.5rem 0;
+
+    font-family: var(--font-heading);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: #f2ede6;
+    text-align: center;
+
+    border: none;
+    cursor: pointer;
+    transition: filter 0.25s, opacity 0.25s;
+
+    /* binding groove */
+    box-shadow:
+      inset -4px 0 10px rgba(0, 0, 0, 0.45),
+      4px 0 10px rgba(0, 0, 0, 0.4);
+  }
+
+  /* decorative rules top and bottom of spine */
+  .book-spine::before,
+  .book-spine::after {
+    content: '';
+    display: block;
+    width: 22px;
+    height: 1px;
+    background: rgba(242, 237, 230, 0.3);
+    margin: 0 auto 1.5rem;
+  }
+  .book-spine::after {
+    margin: 1.5rem auto 0;
+  }
+
+  .book:not([data-open="true"]) .book-spine {
+    opacity: 0.68;
+  }
+  .book:not([data-open="true"]) .book-spine:hover {
+    opacity: 1;
+    filter: brightness(1.2);
+  }
+  .book:not([data-open="true"]) .book-spine:focus-visible {
+    outline: 2px solid var(--color-accent-terra);
+    outline-offset: -4px;
+    opacity: 1;
+  }
+
+  /* spine colors */
+  #book-cover      .book-spine { background: #2a2218; }
+  #book-about      .book-spine { background: #3d2c1a; }
+  #book-nonslopfun .book-spine { background: #c4783a; }
+  #book-practical  .book-spine { background: #4a6e3a; }
+  #book-hearth     .book-spine { background: #7a3a28; }
+  #book-cabin      .book-spine { background: #3a5a48; }
+  #book-work       .book-spine { background: #5c4830; }
+  #book-contact    .book-spine { background: #6b5c4a; }
+
+  /* ── Page ── */
+  .book-page {
+    flex: 1;
+    height: 100%;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    background: var(--color-bg);
+
+    transform-origin: left center;
+    transform: perspective(1400px) rotateY(-7deg);
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+
+    /* binding shadow on left edge */
+    box-shadow: inset 10px 0 24px rgba(42, 34, 24, 0.2);
+
+    transition:
+      opacity 220ms ease,
+      transform 500ms cubic-bezier(0.4, 0, 0.2, 1),
+      visibility 0s linear 500ms;
+  }
+
+  .book[data-open="true"] .book-page {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+    transform: perspective(1400px) rotateY(0deg);
+    transition:
+      opacity 220ms ease 280ms,
+      transform 500ms cubic-bezier(0.4, 0, 0.2, 1),
+      visibility 0s linear 0s;
+  }
+
+  /* ── Cover page ── */
+  .cover-page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-hero-bg);
+    box-shadow: none;
+    overflow: hidden;
+  }
+
+  .cover-inner {
+    text-align: center;
+    padding: 2rem;
+    max-width: 360px;
+  }
+
+  .cover-photo {
+    width: 130px;
+    height: 130px;
     border-radius: 50%;
     object-fit: cover;
     object-position: 25% 30%;
-    border: 2px solid rgba(196, 120, 58, 0.4);
-    display: block;
+    border: 2px solid rgba(196, 120, 58, 0.45);
+    margin: 0 auto 1.75rem;
   }
 
-  /* ── Gradient bar ── */
-  .gradient-bar {
-    width: 100%;
-    height: 3px;
-    background: linear-gradient(90deg, #c4783a, #8a6a3a, #4a6e3a);
-  }
-
-  /* ── Diagonal wedge transition ── */
-  .section-wedge {
-    height: 56px;
-    background: var(--color-hero-bg);
-    clip-path: polygon(0 0, 100% 0, 0 100%);
-  }
-
-  /* ── Shared section layout ── */
-  .section {
-    padding: 5rem 2rem;
-  }
-
-  .section-inner {
-    max-width: 740px;
-    margin: 0 auto;
-  }
-
-  /* ── About ── */
-  .about {
-    background-color: var(--color-bg);
-  }
-
-  .pull-quote {
+  .cover-name {
     font-family: var(--font-heading);
-    font-size: clamp(20px, 2.6vw, 26px);
-    font-style: italic;
-    font-weight: 400;
-    color: var(--color-ink);
-    border-left: 3px solid var(--color-accent-terra);
-    padding: 0.25rem 0 0.25rem 1.5rem;
-    margin: 2.5rem 0;
-    max-width: 620px;
-    line-height: 1.55;
-    quotes: none;
+    font-size: clamp(26px, 3.5vw, 40px);
+    font-weight: 700;
+    color: var(--color-hero-text);
+    line-height: 1.2;
+    letter-spacing: -0.01em;
   }
 
-  .about-body {
+  .cover-rule {
+    width: 28px;
+    height: 1px;
+    background: var(--color-accent-terra);
+    margin: 1.25rem auto;
+  }
+
+  .cover-tagline {
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-style: italic;
+    font-weight: 300;
+    color: var(--color-hero-muted);
+    line-height: 1.75;
+  }
+
+  .cover-hint {
+    font-family: var(--font-ui);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: rgba(184, 168, 130, 0.5);
+    margin-top: 2.5rem;
+  }
+
+  /* ── Text pages (About, Work, Contact) ── */
+  .text-page {
+    padding: 3rem 2.5rem 4rem;
+  }
+
+  .page-header {
+    display: flex;
+    align-items: baseline;
+    gap: 0.9rem;
+    padding-bottom: 1.5rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .chapter-num {
+    font-family: var(--font-heading);
+    font-size: 13px;
+    font-style: italic;
+    color: var(--color-ink-light);
+    opacity: 0.55;
+    min-width: 1.2rem;
+  }
+
+  .chapter-title {
+    font-family: var(--font-heading);
+    font-size: clamp(22px, 2.8vw, 30px);
+    font-weight: 700;
+    color: var(--color-ink);
+    line-height: 1.2;
+  }
+
+  .page-body {
     display: flex;
     flex-direction: column;
     gap: 1.4rem;
     font-family: var(--font-body);
-    font-size: 17px;
+    font-size: 16px;
     color: var(--color-ink);
-    line-height: 1.8;
-    max-width: 680px;
+    line-height: 1.85;
   }
 
-  /* ── Projects ── */
-  .projects {
-    background-color: var(--color-bg);
-    border-top: 1px solid var(--color-border);
+  .pull-quote {
+    font-family: var(--font-heading);
+    font-size: clamp(18px, 2.2vw, 22px);
+    font-style: italic;
+    font-weight: 400;
+    color: var(--color-ink);
+    border-left: 3px solid var(--color-accent-terra);
+    padding: 0.25rem 0 0.25rem 1.25rem;
+    margin: 0.25rem 0;
+    line-height: 1.55;
+    quotes: none;
   }
 
-  .projects-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem;
-  }
-
-  .project-card {
-    background-color: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: 4px;
-    box-shadow: 0 2px 8px rgba(42, 34, 24, 0.06);
+  /* ── Project pages ── */
+  .project-page {
     display: flex;
     flex-direction: column;
-    overflow: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    height: 100%;
   }
 
-  /* Card media area (image or decorative header) */
-  .card-media {
-    height: 190px;
-    overflow: hidden;
+  .project-frontispiece {
+    width: 100%;
+    height: 240px;
     flex-shrink: 0;
+    overflow: hidden;
+    background: var(--color-surface);
   }
 
-  .card-media img {
+  .project-frontispiece img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     object-position: top center;
-    display: block;
   }
 
-  /* App screenshot: show the top of the UI */
-  .card-media--app img {
+  .project-frontispiece--app {
+    background: #f8f4ef;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+  .project-frontispiece--app img {
+    object-fit: contain;
     object-position: top center;
   }
 
-  /* Cabin photo: center vertically */
-  .card-media--photo img {
+  .project-frontispiece--photo img {
     object-position: center center;
   }
 
-  /* Decorative monogram headers */
-  .card-media--terra {
-    background-color: #f5e4d0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .card-media--olive {
-    background-color: #e4ede0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .card-media-monogram {
-    font-family: var(--font-heading);
-    font-size: 96px;
-    font-weight: 700;
-    line-height: 1;
-    user-select: none;
-  }
-
-  .card-media--terra .card-media-monogram {
-    color: var(--color-accent-terra);
-    opacity: 0.22;
-  }
-
-  .card-media--olive .card-media-monogram {
-    color: var(--color-accent-olive);
-    opacity: 0.22;
-  }
-
-  /* Card text content */
-  .card-content {
-    padding: 20px 24px 24px;
+  .project-body {
+    padding: 2rem 2.5rem 3rem;
     display: flex;
     flex-direction: column;
-    gap: 0.6rem;
+    gap: 0.7rem;
     flex: 1;
   }
 
-  .card-tag {
+  .project-tag {
     font-family: var(--font-ui);
     font-size: 10px;
     font-weight: 500;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
     color: var(--color-accent-terra);
   }
 
-  .card-title {
+  .project-title {
     font-family: var(--font-heading);
-    font-size: 20px;
+    font-size: clamp(22px, 2.8vw, 30px);
     font-weight: 700;
     color: var(--color-ink);
-    line-height: 1.25;
+    line-height: 1.2;
   }
 
-  .card-description {
+  .project-desc {
     font-family: var(--font-body);
-    font-size: 15px;
+    font-size: 16px;
     color: var(--color-ink-light);
-    line-height: 1.7;
+    line-height: 1.8;
     flex: 1;
   }
 
-  .card-cta {
+  .project-cta {
     display: inline-block;
-    margin-top: 0.5rem;
+    margin-top: 0.75rem;
     font-family: var(--font-ui);
     font-size: 13px;
     font-weight: 500;
@@ -554,54 +626,41 @@ import Base from '../layouts/Base.astro';
     text-decoration: none;
     transition: text-decoration 0.15s;
   }
+  .project-cta:hover { text-decoration: underline; }
 
-  .card-cta:hover {
-    text-decoration: underline;
-  }
-
-  .card-cta-disabled {
+  .project-cta-disabled {
     display: inline-block;
-    margin-top: 0.5rem;
+    margin-top: 0.75rem;
     font-family: var(--font-ui);
     font-size: 13px;
-    font-weight: 400;
     color: var(--color-ink-light);
-    opacity: 0.7;
+    opacity: 0.6;
   }
 
-  /* ── Professional Work ── */
-  .work {
-    background-color: var(--color-bg);
-    border-top: 1px solid var(--color-border);
-  }
-
+  /* ── Work page ── */
   .work-intro {
     font-family: var(--font-ui);
-    font-size: 13px;
+    font-size: 12px;
     color: var(--color-ink-light);
-    margin-bottom: 2rem;
-    letter-spacing: 0.02em;
+    letter-spacing: 0.03em;
+    margin-bottom: 1.75rem;
   }
 
-  .work-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.25rem;
-  }
-
-  .work-card {
-    background-color: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-left: 3px solid var(--color-ink);
-    border-radius: 0 4px 4px 0;
-    padding: 24px 24px 24px 22px;
+  .work-list {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
   }
 
-  .work-card--full {
-    grid-column: 1 / -1;
+  .work-entry {
+    padding: 1.25rem 0 1.25rem 1.25rem;
+    border-left: 2px solid var(--color-border);
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .work-entry + .work-entry {
+    border-top: 1px solid var(--color-border);
   }
 
   .work-employer {
@@ -615,51 +674,44 @@ import Base from '../layouts/Base.astro';
 
   .work-title {
     font-family: var(--font-heading);
-    font-size: 18px;
+    font-size: 17px;
     font-weight: 700;
     color: var(--color-ink);
     line-height: 1.25;
   }
 
-  .work-description {
+  .work-desc {
     font-family: var(--font-body);
-    font-size: 15px;
+    font-size: 14px;
     color: var(--color-ink-light);
     line-height: 1.7;
-    margin-top: 0.2rem;
   }
 
-  /* ── Contact ── */
-  .contact {
-    background-color: var(--color-bg);
-    border-top: 1px solid var(--color-border);
-  }
-
+  /* ── Contact page ── */
   .contact-intro {
     font-family: var(--font-body);
-    font-size: 17px;
+    font-size: 16px;
     color: var(--color-ink);
     line-height: 1.8;
-    max-width: 600px;
-    margin-bottom: 2.5rem;
+    margin-bottom: 2rem;
   }
 
   .contact-form {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
-    max-width: 560px;
+    gap: 1.25rem;
+    max-width: 460px;
   }
 
   .form-group {
     display: flex;
     flex-direction: column;
-    gap: 0.4rem;
+    gap: 0.35rem;
   }
 
   .form-label {
     font-family: var(--font-ui);
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 500;
     letter-spacing: 0.1em;
     text-transform: uppercase;
@@ -667,132 +719,115 @@ import Base from '../layouts/Base.astro';
   }
 
   .form-input {
-    background-color: var(--color-surface);
+    background: var(--color-surface);
     border: 1px solid var(--color-border);
     border-radius: 2px;
-    padding: 12px 14px;
+    padding: 10px 12px;
     font-family: var(--font-body);
-    font-size: 16px;
+    font-size: 15px;
     color: var(--color-ink);
     width: 100%;
     transition: border-color 0.2s;
     outline: none;
   }
-
-  .form-input:focus {
-    border-color: var(--color-ink-light);
-  }
+  .form-input:focus { border-color: var(--color-ink-light); }
 
   .form-textarea {
     resize: vertical;
-    min-height: 140px;
+    min-height: 120px;
   }
 
   .form-submit {
     align-self: flex-start;
-    background-color: var(--color-ink);
+    background: var(--color-ink);
     color: var(--color-hero-text);
     font-family: var(--font-ui);
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 500;
     letter-spacing: 0.05em;
     border: none;
     border-radius: 2px;
-    padding: 12px 28px;
+    padding: 10px 24px;
     cursor: pointer;
     transition: opacity 0.2s;
   }
-
-  .form-submit:hover {
-    opacity: 0.85;
-  }
-
+  .form-submit:hover { opacity: 0.85; }
   .form-submit:focus-visible {
     outline: 2px solid var(--color-accent-terra);
     outline-offset: 3px;
   }
 
-  /* ── Footer ── */
-  .footer {
-    background-color: var(--color-hero-bg);
-    padding: 2rem;
-  }
-
-  .footer-inner {
-    max-width: 740px;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 1rem;
-  }
-
-  .footer-copy {
-    font-family: var(--font-ui);
-    font-size: 12px;
-    color: var(--color-hero-muted);
-  }
-
-  .footer-links {
-    display: flex;
-    gap: 1.5rem;
-    flex-wrap: wrap;
-  }
-
-  .footer-links a {
-    font-family: var(--font-ui);
-    font-size: 12px;
-    color: var(--color-hero-muted);
-    text-decoration: none;
-    transition: color 0.15s;
-  }
-
-  .footer-links a:hover {
-    color: var(--color-hero-text);
-  }
-
-  /* ── Responsive ── */
+  /* ── Mobile: vertical accordion ── */
   @media (max-width: 700px) {
-    .hero {
-      padding: 3rem 1.5rem 2.5rem;
-    }
-
-    .hero-inner {
-      grid-template-columns: 1fr;
-      gap: 2rem;
-    }
-
-    .hero-photo {
-      width: 160px;
-      height: 160px;
-    }
-
-    .hero-photo-wrap {
-      order: -1;
-    }
-
-    .section {
-      padding: 3rem 1.5rem;
-    }
-
-    .pull-quote {
-      font-size: 18px;
-    }
-
-    /* Single-column grids on mobile */
-    .projects-grid,
-    .work-grid {
-      grid-template-columns: 1fr;
-    }
-
-    .work-card--full {
-      grid-column: 1;
-    }
-
-    .footer-inner {
+    .shelf {
       flex-direction: column;
-      align-items: flex-start;
+      height: auto;
+      min-height: 100dvh;
+      overflow: visible;
+      gap: 0;
+    }
+
+    .book {
+      flex-direction: column;
+      width: 100% !important;
+      height: auto;
+      overflow: visible;
+      transition: none;
+      flex-shrink: 1;
+    }
+
+    .book-spine {
+      writing-mode: horizontal-tb;
+      transform: none;
+      width: 100%;
+      height: 56px;
+      text-align: left;
+      padding: 0 1.5rem;
+      font-size: 14px;
+      box-shadow: none;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+    }
+
+    .book-spine::before,
+    .book-spine::after { display: none; }
+
+    .book-page {
+      transform: none !important;
+      max-height: 0;
+      height: auto;
+      overflow: hidden;
+      visibility: visible;
+      opacity: 0;
+      pointer-events: none;
+      box-shadow: none;
+      transition:
+        max-height 420ms ease,
+        opacity 280ms ease;
+    }
+
+    .book[data-open="true"] .book-page {
+      max-height: 2400px;
+      opacity: 1;
+      pointer-events: auto;
+      transition:
+        max-height 420ms ease,
+        opacity 280ms ease 120ms;
+    }
+
+    .cover-page {
+      min-height: 60vh;
+    }
+
+    .text-page {
+      padding: 2rem 1.5rem 3rem;
+    }
+
+    .project-frontispiece {
+      height: 200px;
+    }
+
+    .project-body {
+      padding: 1.5rem 1.5rem 2.5rem;
     }
   }
 </style>
