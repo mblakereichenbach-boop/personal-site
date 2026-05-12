@@ -1,526 +1,552 @@
 ---
 import Base from '../layouts/Base.astro';
+
+interface RSSPost { title: string; link: string; date: string; thumb: string; }
+
+function decodeEntities(s: string) {
+  return s.replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>')
+          .replace(/&quot;/g, '"').replace(/&#39;|&#x27;/g, "'");
+}
+
+let recentPosts: RSSPost[] = [];
+try {
+  const xml = await fetch('https://rss.beehiiv.com/feeds/9kSd0Ruqsj.xml').then(r => r.text());
+  recentPosts = (xml.match(/<item>[\s\S]*?<\/item>/g) ?? []).slice(0, 4).map(item => {
+    const raw   = item.match(/<title>([\s\S]*?)<\/title>/)?.[1]?.trim() ?? '';
+    const title = decodeEntities(raw).replace(/\s*\|.*$/, '');
+    const link  = item.match(/<link>([\s\S]*?)<\/link>/)?.[1]?.trim() ?? '';
+    const pub   = item.match(/<pubDate>([\s\S]*?)<\/pubDate>/)?.[1]?.trim() ?? '';
+    const date  = pub ? new Date(pub).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '';
+    const thumb = item.match(/<enclosure url="([^"]+)"/)?.[1]?.trim() ?? '';
+    return { title, link, date, thumb };
+  });
+} catch { /* fail silently */ }
 ---
 
 <Base>
-  <div class="shelf" role="main">
 
-    <!-- Cover -->
-    <article class="book" id="book-cover" data-open="true">
-      <button class="book-spine" aria-controls="page-cover" aria-expanded="true" aria-label="Home">
-        Blake Reichenbach
-      </button>
-      <div class="book-page cover-page" id="page-cover">
-        <div class="cover-inner">
-          <img src="/images/blake.jpg" alt="Blake Reichenbach" class="cover-photo" />
-          <h1 class="cover-name">Blake<br />Reichenbach</h1>
-          <div class="cover-rule" aria-hidden="true"></div>
-          <p class="cover-tagline">
-            Product manager, writer, and builder of things. Drawn to curiosity and craft.
-          </p>
-          <p class="cover-hint" aria-hidden="true">select a volume to explore &rarr;</p>
+  <!-- ══════════════════════════════════════════ HERO ══════════════════════════════════════════ -->
+  <section class="hero">
+    <div class="hero-left">
+      <nav class="hero-nav" aria-label="Site navigation">
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#work">Product Work</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <div class="hero-identity">
+        <h1 class="hero-name">M. Blake<br/>Reichenbach</h1>
+        <p class="hero-role">Writer, Product Manager, &amp; Tinkerer</p>
+      </div>
+      <div class="hero-bottom">
+        <p class="hero-eyebrow">Long story short:</p>
+        <p class="hero-script">I build things<br/>that matter.</p>
+      </div>
+    </div>
+    <div class="hero-right">
+      <img src="/images/blake-personal.jpg" alt="Blake Reichenbach" />
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════ INDEX NAV ═══════════════════════════════════════ -->
+  <section class="index-nav" aria-label="Site sections">
+    <div class="index-left">
+      <p class="index-wordmark">Blake<br/>Reichenbach</p>
+      <p class="index-descriptor">Product manager · writer · builder of things drawn to curiosity and craft.</p>
+    </div>
+    <nav class="index-links">
+      <a href="#about" class="index-link">
+        <span class="index-link-title">About</span>
+        <span class="index-link-num">01</span>
+      </a>
+      <a href="#projects" class="index-link index-link--terra">
+        <span class="index-link-title">Projects</span>
+        <span class="index-link-num">02</span>
+      </a>
+      <a href="#work" class="index-link">
+        <span class="index-link-title">Product Work</span>
+        <span class="index-link-num">03</span>
+      </a>
+      <a href="#contact" class="index-link index-link--terra">
+        <span class="index-link-title">Contact</span>
+        <span class="index-link-num">04</span>
+      </a>
+    </nav>
+  </section>
+
+  <!-- ════════════════════════════════════════ ABOUT ═══════════════════════════════════════════ -->
+  <section class="about" id="about">
+    <div class="about-photo">
+      <img src="/images/blake-editorial.jpg" alt="Blake Reichenbach" />
+    </div>
+    <div class="about-content">
+      <span class="stamp">01 — About</span>
+      <h2 class="about-heading">
+        Product manager.<br/>
+        <em>Writer by compulsion.</em>
+      </h2>
+      <div class="about-body">
+        <p>I spend a lot of time thinking about why things are built the way they are — and whether they could be better. As a PM, I've spent my career on ambitious, zero-to-one launches. The work I'm most proud of starts with genuine curiosity about what people actually need — not what they say they want, not what's easiest to build.</p>
+        <p>That same instinct shows up in everything I make. PRactical exists because workout tracking deserved a clean, intelligent tool. Non-Slop Fun exists because the well-examined life is worth writing about. The Berea Writers Cabin exists because some thinking only happens when you change your scenery.</p>
+        <p>I'm based in Kentucky. I'm working on two novels — an Appalachian dark fantasy about ecology and homecoming, and a high fantasy rooted in the mythology of gods. Both are works in progress, which is exactly where they should be.</p>
+      </div>
+      <div class="about-details">
+        <div class="about-detail">
+          <span class="detail-label">Based in</span>
+          <span class="detail-value">Kentucky, USA</span>
+        </div>
+        <div class="about-detail">
+          <span class="detail-label">Day job</span>
+          <span class="detail-value">Product Manager · HubSpot</span>
+        </div>
+        <div class="about-detail">
+          <span class="detail-label">Building</span>
+          <span class="detail-value">Non-Slop Fun · PRactical · Creator's Hearth · Berea Writers Cabin</span>
         </div>
       </div>
-    </article>
+    </div>
+  </section>
 
-    <!-- About -->
-    <article class="book" id="book-about">
-      <button class="book-spine" aria-controls="page-about" aria-expanded="false" aria-label="About">
-        About
-      </button>
-      <div class="book-page text-page" id="page-about" aria-hidden="true">
-        <div class="page-header">
-          <span class="chapter-num" aria-hidden="true">I</span>
-          <h2 class="chapter-title">About</h2>
-        </div>
-        <div class="page-body">
-          <p>
-            I'm a product manager by trade and a writer by compulsion, which means I spend a lot
-            of time thinking about why things are built the way they are — and whether they could
-            be better.
-          </p>
-          <p>
-            As a PM, I've spent my career on ambitious, zero-to-one launches. The work I'm most
-            proud of starts with genuine curiosity about what people actually need — not what they
-            say they want, not what's easiest to build — and ends with something that earns their
-            trust. I think of that as product taste: the ability to turn empathy into decisions.
-          </p>
-          <blockquote class="pull-quote">
-            "Product taste: the ability to turn empathy into decisions."
-          </blockquote>
-          <p>
-            That same instinct shows up everywhere. PRactical exists because I saw a gap in
-            the market for a workout tracker that respects the user's intelligence — no bloat, no
-            dark patterns, just a clean tool that does exactly what it promises. Non-Slop Fun
-            exists because I believe the well-examined life is worth writing about, and that
-            genuine creative and cultural commentary is an act of resistance against the default
-            mode of mindless scrolling. The Berea Writers Cabin exists because a space should mean
-            something — it should invite the kind of thinking that doesn't happen on a laptop screen.
-          </p>
-          <p>
-            I'm based in Kentucky. I'm a certified personal trainer who mostly just trains himself.
-            I'm working on two novels — an Appalachian dark fantasy about ecology, class, and what
-            it means to come home, and a high fantasy rooted in the mythology of gods and the people
-            who live in their shadow. Both are works in progress, which feels like the right place
-            for them to be.
-          </p>
-          <p>
-            If you've landed here, you're probably curious, you make things, and you're a little
-            skeptical of anything that was built to game your attention rather than earn it. Welcome.
-          </p>
-        </div>
-      </div>
-    </article>
-
-    <!-- Non-Slop Fun -->
-    <article class="book" id="book-nonslopfun">
-      <button class="book-spine" aria-controls="page-nonslopfun" aria-expanded="false" aria-label="Non-Slop Fun newsletter">
-        Non-Slop Fun
-      </button>
-      <div class="book-page project-page" id="page-nonslopfun" aria-hidden="true">
-        <div class="project-frontispiece">
-          <img src="/images/nonslop.png" alt="Non-Slop Fun — a collage illustration of a figure in a suit holding coffee" />
-        </div>
-        <div class="project-body">
-          <span class="project-tag">Newsletter</span>
-          <h2 class="project-title">Non-Slop Fun</h2>
-          <p class="project-desc">
-            Reflection is resistance. Non-Slop Fun is a newsletter about creative and cultural
-            commentary — examining the things worth examining, and celebrating the well-examined life.
-          </p>
-          <a href="https://www.nonslopfun.com" class="project-cta" target="_blank" rel="noopener noreferrer">
-            Read it &rarr;
-          </a>
-        </div>
-      </div>
-    </article>
-
-    <!-- PRactical Workouts -->
-    <article class="book" id="book-practical">
-      <button class="book-spine" aria-controls="page-practical" aria-expanded="false" aria-label="PRactical Workouts iOS app">
-        PRactical
-      </button>
-      <div class="book-page project-page" id="page-practical" aria-hidden="true">
-        <div class="project-frontispiece project-frontispiece--app">
-          <img src="/images/practical.png" alt="PRactical Workouts app home screen showing weekly training stats" />
-        </div>
-        <div class="project-body">
-          <span class="project-tag">iOS App</span>
-          <h2 class="project-title">PRactical Workouts</h2>
-          <p class="project-desc">
-            A workout tracker for lifters who want a clean, intelligent tool without the bloat.
-            No social features, no AI gimmicks — just straightforward progressive overload
-            tracking done right.
-          </p>
-          <a href="https://www.practicalworkouts.com" class="project-cta" target="_blank" rel="noopener noreferrer">
-            Download &rarr;
-          </a>
-        </div>
-      </div>
-    </article>
-
-    <!-- Creator's Hearth -->
-    <article class="book" id="book-hearth">
-      <button class="book-spine" aria-controls="page-hearth" aria-expanded="false" aria-label="Creator's Hearth writing site">
-        Creator's Hearth
-      </button>
-      <div class="book-page project-page" id="page-hearth" aria-hidden="true">
-        <div class="project-frontispiece">
-          <img src="/images/creators-hearth.png" alt="Creator's Hearth — a watercolor fireplace logo" />
-        </div>
-        <div class="project-body">
-          <span class="project-tag">Writing &amp; Craft</span>
-          <h2 class="project-title">Creator's Hearth</h2>
-          <p class="project-desc">
-            A niche site for writers who take the craft seriously. Practical guidance, honest
-            takes, and a growing library of resources for fiction writers at every stage.
-          </p>
-          <a href="#" class="project-cta">Visit &rarr;</a>
-        </div>
-      </div>
-    </article>
-
-    <!-- Berea Writers Cabin -->
-    <article class="book" id="book-cabin">
-      <button class="book-spine" aria-controls="page-cabin" aria-expanded="false" aria-label="Berea Writers Cabin short-term rental">
-        Berea Writers Cabin
-      </button>
-      <div class="book-page project-page" id="page-cabin" aria-hidden="true">
-        <div class="project-frontispiece project-frontispiece--photo">
-          <img src="/images/cabin.jpg" alt="The Berea Writers Cabin nestled in the Appalachian foothills" />
-        </div>
-        <div class="project-body">
-          <span class="project-tag">Short-Term Rental &middot; Berea, KY</span>
-          <h2 class="project-title">Berea Writers Cabin</h2>
-          <p class="project-desc">
-            A creative retreat in the Appalachian foothills, steeped in regional charm and
-            designed for the kind of thinking that requires a change of scenery.
-          </p>
-          <span class="project-cta-disabled">Bookings Coming Soon</span>
-        </div>
-      </div>
-    </article>
-
-    <!-- Product Work -->
-    <article class="book" id="book-work">
-      <button class="book-spine" aria-controls="page-work" aria-expanded="false" aria-label="Product work">
-        Product Work
-      </button>
-      <div class="book-page text-page" id="page-work" aria-hidden="true">
-        <div class="page-header">
-          <span class="chapter-num" aria-hidden="true">II</span>
-          <h2 class="chapter-title">Product Work</h2>
-        </div>
-        <p class="work-intro">Selected work from my time as a Product Manager at HubSpot.</p>
-        <div class="work-list">
-
-          <div class="work-entry">
-            <span class="work-employer">HubSpot &middot; Trust &amp; Safety</span>
-            <h3 class="work-title">Fraud Detection &amp; ML Modernization</h3>
-            <p class="work-desc">
-              Overhauled fraud detection in Trust &amp; Safety to leverage machine learning.
-              Maintained accuracy and precision across key threat detection categories while laying
-              the groundwork to shift from reactive to proactive modeling.
-            </p>
-          </div>
-
-          <div class="work-entry">
-            <span class="work-employer">HubSpot &middot; Policy &amp; Compliance</span>
-            <h3 class="work-title">Digital Services Act Compliance</h3>
-            <p class="work-desc">
-              Designed HubSpot's product strategy for complying with the EU Digital Services Act —
-              navigating the intersection of regulatory requirements, platform architecture, and
-              user experience at scale.
-            </p>
-          </div>
-
-          <div class="work-entry">
-            <span class="work-employer">HubSpot &middot; Content Hub</span>
-            <h3 class="work-title">Content Remix</h3>
-            <p class="work-desc">
-              Launched Content Remix as part of the creation of Content Hub, quickly establishing
-              the tool as a flagship AI product within HubSpot's portfolio.
-            </p>
-          </div>
-
-          <div class="work-entry">
-            <span class="work-employer">HubSpot &middot; Search &amp; Discovery</span>
-            <h3 class="work-title">Answer Engine Optimization (AEO)</h3>
-            <p class="work-desc">
-              Launched HubSpot's AEO v1 feature set, setting the stage for the acquisition of
-              XFunnel and the re-release of the v2 tools currently on the market.
-            </p>
-          </div>
-
-          <div class="work-entry">
-            <span class="work-employer">HubSpot &middot; Social</span>
-            <h3 class="work-title">Social Insights</h3>
-            <p class="work-desc">
-              Conceptualized and launched HubSpot's Social Insights framework, built on Reddit
-              data, to help brands extract meaningful audience and competitive insights from across
-              the internet to inform their marketing strategies.
-            </p>
-          </div>
-
-        </div>
-      </div>
-    </article>
-
-    <!-- Contact -->
-    <article class="book" id="book-contact">
-      <button class="book-spine" aria-controls="page-contact" aria-expanded="false" aria-label="Get in touch">
-        Get in Touch
-      </button>
-      <div class="book-page text-page" id="page-contact" aria-hidden="true">
-        <div class="page-header">
-          <span class="chapter-num" aria-hidden="true">III</span>
-          <h2 class="chapter-title">Get in Touch</h2>
-        </div>
-        <div class="page-body">
-          <p class="contact-intro">
-            If something here resonated — or if you're thinking about working together — I'd love to
-            hear from you. Whether it's a consulting engagement, a creative collaboration, or just a
-            good conversation, feel free to reach out.
-          </p>
-          <form
-            name="contact"
-            method="POST"
-            data-netlify="true"
-            class="contact-form"
-            aria-label="Contact form"
-          >
-            <input type="hidden" name="form-name" value="contact" />
-            <div class="form-group">
-              <label for="name" class="form-label">Name</label>
-              <input type="text" id="name" name="name" required autocomplete="name" class="form-input" />
-            </div>
-            <div class="form-group">
-              <label for="email" class="form-label">Email</label>
-              <input type="email" id="email" name="email" required autocomplete="email" class="form-input" />
-            </div>
-            <div class="form-group">
-              <label for="message" class="form-label">Message</label>
-              <textarea id="message" name="message" required rows="5" class="form-input form-textarea"></textarea>
-            </div>
-            <button type="submit" class="form-submit">Send &rarr;</button>
-          </form>
-        </div>
-      </div>
-    </article>
-
+  <!-- ════════════════════════════════════════ PROJECTS ════════════════════════════════════════ -->
+  <div class="projects-banner" id="projects">
+    <span class="stamp stamp--light">02 — Projects</span>
+    <h2 class="projects-heading">Things I've <em>built.</em></h2>
   </div>
 
-  <script>
-    const books = document.querySelectorAll<HTMLElement>('.book');
+  <!-- Non-Slop Fun ─────────────────── -->
+  <div class="project-feature project-feature--dark">
+    <div class="project-feature-visual">
+      <img src="/images/nonslop.png" alt="Non-Slop Fun — a figure in a suit holding coffee" />
+    </div>
+    <div class="project-feature-body">
+      <span class="project-tag">Newsletter</span>
+      <h3 class="project-feature-title">Non-Slop<br/>Fun</h3>
+      <p class="project-feature-desc">Reflection is resistance. Creative and cultural commentary about the things worth examining — and a celebration of the well-examined life.</p>
+      {recentPosts.length > 0 && (
+        <div class="nsf-carousel">
+          <button class="nsf-arrow nsf-arrow--prev" aria-label="Previous posts" type="button">&#8592;</button>
+          <div class="nsf-grid">
+            {recentPosts.map(post => (
+              <a href={post.link} class="nsf-card" target="_blank" rel="noopener noreferrer">
+                {post.thumb ? (
+                  <img src={post.thumb} alt={post.title} class="nsf-card-img" />
+                ) : (
+                  <div class="nsf-card-img nsf-card-img--placeholder" />
+                )}
+                <div class="nsf-card-overlay">
+                  <span class="nsf-card-date">{post.date}</span>
+                  <span class="nsf-card-title">{post.title}</span>
+                </div>
+              </a>
+            ))}
+          </div>
+          <button class="nsf-arrow nsf-arrow--next" aria-label="Next posts" type="button">&#8594;</button>
+        </div>
+      )}
+      <a href="https://www.nonslopfun.com" class="project-cta" target="_blank" rel="noopener noreferrer">Read it →</a>
+    </div>
+  </div>
 
-    function openBook(target: HTMLElement) {
-      books.forEach(book => {
-        const isTarget = book === target;
-        const spine = book.querySelector('button')!;
-        const page  = book.querySelector('.book-page')!;
+  <!-- PRactical Workouts ──────────── -->
+  <div class="project-feature project-feature--cream">
+    <div class="project-feature-body project-feature-body--invert">
+      <span class="project-tag project-tag--olive">iOS App</span>
+      <h3 class="project-feature-title project-feature-title--dark">PRactical<br/>Workouts</h3>
+      <p class="project-feature-desc project-feature-desc--dark">A workout tracker for lifters who want a clean, intelligent tool without the bloat. No social features, no AI gimmicks — just straightforward progressive overload tracking done right.</p>
+      <a href="https://www.practicalworkouts.com" class="project-cta project-cta--dark" target="_blank" rel="noopener noreferrer">Download →</a>
+    </div>
+    <div class="project-feature-visual project-feature-visual--screens">
+      <div class="screens-stack">
+        <img src="/images/practical-screenshot1.png" alt="PRactical home screen" class="screen screen-back" />
+        <img src="/images/practical-screenshot2.png" alt="PRactical workout log" class="screen screen-front" />
+        <img src="/images/practical-screenshot3.png" alt="PRactical history view" class="screen screen-far" />
+      </div>
+    </div>
+  </div>
 
-        book.dataset.open = isTarget ? 'true' : 'false';
-        spine.setAttribute('aria-expanded', String(isTarget));
-        page.setAttribute('aria-hidden', String(!isTarget));
-      });
-    }
+  <!-- Creator's Hearth + Cabin ─────── -->
+  <div class="project-pair">
+    <div class="project-card" style="--card-bg: #252c3a;">
+      <div class="project-card-visual">
+        <img src="/images/creators-hearth.png" alt="Creator's Hearth logo — a watercolor fireplace" />
+      </div>
+      <div class="project-card-body">
+        <span class="project-tag">Writing &amp; Craft</span>
+        <h3 class="project-card-title">Creator's Hearth</h3>
+        <p class="project-card-desc">A niche site for writers who take the craft seriously. Practical guidance, honest takes, and a growing library of resources for fiction writers at every stage.</p>
+        <span class="project-cta-muted">Coming Soon</span>
+      </div>
+    </div>
+    <div class="project-card" style="--card-bg: #2d3f4d;">
+      <div class="project-card-visual project-card-visual--photo">
+        <img src="/images/cabin.jpg" alt="Berea Writers Cabin in the Appalachian foothills" />
+      </div>
+      <div class="project-card-body">
+        <span class="project-tag">Short-Term Rental · Berea, KY</span>
+        <h3 class="project-card-title">Berea Writers Cabin</h3>
+        <p class="project-card-desc">A creative retreat in the Appalachian foothills, steeped in regional charm and designed for the kind of thinking that requires a change of scenery.</p>
+        <span class="project-cta-muted">Bookings Coming Soon</span>
+      </div>
+    </div>
+  </div>
 
-    books.forEach(book => {
-      book.querySelector('button')!.addEventListener('click', () => {
-        if (book.dataset.open !== 'true') openBook(book);
-      });
-    });
+  <!-- ════════════════════════════════════ PRODUCT WORK ════════════════════════════════════════ -->
+  <section class="work" id="work">
+    <div class="work-top">
+      <div class="work-header">
+        <span class="stamp stamp--light">03 — Product Work</span>
+        <h2 class="work-heading">Selected<br/><em>HubSpot work.</em></h2>
+        <p class="work-intro">Zero-to-one launches. Platform scale. Products used by millions.</p>
+      </div>
+      <div class="work-photo placeholder-img">
+        <span class="placeholder-label">Upload a workplace or context photo here</span>
+        <span class="placeholder-hint">e.g. team photo, speaking engagement, or product screenshot</span>
+      </div>
+    </div>
+    <div class="work-entries">
+      <div class="work-entry">
+        <span class="work-num">01</span>
+        <div class="work-entry-body">
+          <span class="work-team">Trust &amp; Safety</span>
+          <h3 class="work-title">Fraud Detection &amp; ML Modernization</h3>
+          <p class="work-desc">Overhauled fraud detection to leverage machine learning. Maintained accuracy across key threat categories while laying the groundwork to shift from reactive to proactive modeling.</p>
+        </div>
+      </div>
+      <div class="work-entry">
+        <span class="work-num">02</span>
+        <div class="work-entry-body">
+          <span class="work-team">Policy &amp; Compliance</span>
+          <h3 class="work-title">Digital Services Act Compliance</h3>
+          <p class="work-desc">Designed HubSpot's product strategy for EU DSA compliance — navigating regulatory requirements, platform architecture, and user experience at scale.</p>
+        </div>
+      </div>
+      <div class="work-entry">
+        <span class="work-num">03</span>
+        <div class="work-entry-body">
+          <span class="work-team">Content Hub</span>
+          <h3 class="work-title">Content Remix</h3>
+          <p class="work-desc">Launched Content Remix as part of the creation of Content Hub, quickly establishing the tool as a flagship AI product within HubSpot's portfolio.</p>
+        </div>
+      </div>
+      <div class="work-entry">
+        <span class="work-num">04</span>
+        <div class="work-entry-body">
+          <span class="work-team">Search &amp; Discovery</span>
+          <h3 class="work-title">Answer Engine Optimization (AEO)</h3>
+          <p class="work-desc">Launched HubSpot's AEO v1 feature set, setting the stage for the XFunnel acquisition and the v2 tools currently on the market.</p>
+        </div>
+      </div>
+      <div class="work-entry">
+        <span class="work-num">05</span>
+        <div class="work-entry-body">
+          <span class="work-team">Social</span>
+          <h3 class="work-title">Social Insights</h3>
+          <p class="work-desc">Conceptualized and launched HubSpot's Social Insights framework — built on Reddit data — to help brands extract meaningful audience and competitive intelligence.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    document.addEventListener('keydown', e => {
-      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
-      const all  = [...books];
-      const open = all.find(b => b.dataset.open === 'true');
-      if (!open) return;
-      const idx = all.indexOf(open);
-      if (e.key === 'ArrowRight' && idx < all.length - 1) openBook(all[idx + 1]);
-      if (e.key === 'ArrowLeft'  && idx > 0)              openBook(all[idx - 1]);
-    });
-  </script>
+  <!-- ══════════════════════════════════════ CONTACT ═══════════════════════════════════════════ -->
+  <section class="contact" id="contact">
+    <div class="contact-left">
+      <span class="stamp">04 — Get in Touch</span>
+      <h2 class="contact-heading">Let's <span class="contact-script">talk.</span></h2>
+      <p class="contact-subhead">Whether it's a consulting engagement, a creative collaboration, or just a good conversation — I'd love to hear from you.</p>
+      <div class="contact-photo placeholder-img">
+        <span class="placeholder-label">Upload a casual or editorial photo here</span>
+      </div>
+    </div>
+    <div class="contact-right">
+      <form name="contact" method="POST" data-netlify="true" class="contact-form" aria-label="Contact form">
+        <input type="hidden" name="form-name" value="contact" />
+        <div class="form-group">
+          <label for="name" class="form-label">Name</label>
+          <input type="text" id="name" name="name" required autocomplete="name" class="form-input" />
+        </div>
+        <div class="form-group">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" id="email" name="email" required autocomplete="email" class="form-input" />
+        </div>
+        <div class="form-group">
+          <label for="message" class="form-label">Message</label>
+          <textarea id="message" name="message" required rows="6" class="form-input form-textarea"></textarea>
+        </div>
+        <button type="submit" class="form-submit">Send it →</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════ FOOTER ════════════════════════════════════════════ -->
+  <footer class="site-footer">
+    <span class="footer-name">Blake Reichenbach</span>
+    <span class="footer-copy">© 2025 · Kentucky, USA</span>
+    <div class="footer-links">
+      <a href="mailto:blake@howdycuriosity.com">Email</a>
+      <a href="https://www.linkedin.com/in/blakereichenbach" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+    </div>
+  </footer>
+
+<script>
+  document.querySelectorAll('.nsf-carousel').forEach(carousel => {
+    const grid = carousel.querySelector('.nsf-grid');
+    const prev = carousel.querySelector('.nsf-arrow--prev');
+    const next = carousel.querySelector('.nsf-arrow--next');
+    const step = () => (grid.querySelector('.nsf-card')?.offsetWidth ?? 200) + 6;
+    prev.addEventListener('click', () => grid.scrollBy({ left: -step(), behavior: 'smooth' }));
+    next.addEventListener('click', () => grid.scrollBy({ left:  step(), behavior: 'smooth' }));
+  });
+</script>
 </Base>
 
 <style>
-  /* ── Shelf ── */
-  .shelf {
-    display: flex;
-    height: 100dvh;
-    overflow: hidden;
-    background: #1a130c;
-    gap: 3px;
+  /* ─────────────────────────────────────────── TOKENS ───────────────────────────────────────── */
+  :root {
+    --script: 'Dancing Script', cursive;
   }
 
-  /* ── Book ── */
-  .book {
-    position: relative;
-    display: flex;
-    flex-direction: row;
-    height: 100%;
-    flex-shrink: 0;
-    width: 64px;
-    transition: width 500ms cubic-bezier(0.4, 0, 0.2, 1);
-    overflow: hidden;
-  }
-
-  .book[data-open="true"] {
-    width: clamp(380px, 52vw, 680px);
-    flex-shrink: 1;
-  }
-
-  /* ── Spine ── */
-  .book-spine {
-    writing-mode: vertical-rl;
-    text-orientation: mixed;
-    transform: rotate(180deg);
-
-    position: relative;
-    flex-shrink: 0;
-    width: 64px;
-    height: 100%;
-    padding: 2.5rem 0;
-
-    font-family: var(--font-heading);
-    font-size: 14px;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    color: #f2ede6;
-    text-align: center;
-
-    border: none;
-    cursor: pointer;
-    transition: filter 0.25s, opacity 0.25s;
-
-    /* binding groove */
-    box-shadow:
-      inset -4px 0 10px rgba(0, 0, 0, 0.45),
-      4px 0 10px rgba(0, 0, 0, 0.4);
-  }
-
-  /* decorative rules top and bottom of spine */
-  .book-spine::before,
-  .book-spine::after {
-    content: '';
+  /* ─────────────────────────────────────────── SHARED ───────────────────────────────────────── */
+  .stamp {
     display: block;
-    width: 22px;
-    height: 1px;
-    background: rgba(242, 237, 230, 0.3);
-    margin: 0 auto 1.5rem;
+    font-family: var(--font-ui);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-ink-light);
+    margin-bottom: 1.25rem;
   }
-  .book-spine::after {
-    margin: 1.5rem auto 0;
-  }
+  .stamp--light { color: rgba(255, 248, 212, 0.5); }
 
-  .book:not([data-open="true"]) .book-spine {
-    opacity: 0.68;
-  }
-  .book:not([data-open="true"]) .book-spine:hover {
-    opacity: 1;
-    filter: brightness(1.2);
-  }
-  .book:not([data-open="true"]) .book-spine:focus-visible {
-    outline: 2px solid var(--color-accent-terra);
-    outline-offset: -4px;
-    opacity: 1;
-  }
-
-  /* spine colors */
-  #book-cover      .book-spine { background: #2a2218; }
-  #book-about      .book-spine { background: #3d2c1a; }
-  #book-nonslopfun .book-spine { background: #c4783a; }
-  #book-practical  .book-spine { background: #4a6e3a; }
-  #book-hearth     .book-spine { background: #7a3a28; }
-  #book-cabin      .book-spine { background: #3a5a48; }
-  #book-work       .book-spine { background: #5c4830; }
-  #book-contact    .book-spine { background: #6b5c4a; }
-
-  /* ── Page ── */
-  .book-page {
-    flex: 1;
-    height: 100%;
-    overflow-y: auto;
-    overscroll-behavior: contain;
-    background: var(--color-bg);
-
-    transform-origin: left center;
-    transform: perspective(1400px) rotateY(-7deg);
-    visibility: hidden;
-    opacity: 0;
-    pointer-events: none;
-
-    /* binding shadow on left edge */
-    box-shadow: inset 10px 0 24px rgba(42, 34, 24, 0.2);
-
-    transition:
-      opacity 220ms ease,
-      transform 500ms cubic-bezier(0.4, 0, 0.2, 1),
-      visibility 0s linear 500ms;
-  }
-
-  .book[data-open="true"] .book-page {
-    visibility: visible;
-    opacity: 1;
-    pointer-events: auto;
-    transform: perspective(1400px) rotateY(0deg);
-    transition:
-      opacity 220ms ease 280ms,
-      transform 500ms cubic-bezier(0.4, 0, 0.2, 1),
-      visibility 0s linear 0s;
-  }
-
-  /* ── Cover page ── */
-  .cover-page {
+  .placeholder-img {
+    background: #d4dac8;
+    border: 2px dashed #A3B087;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: var(--color-hero-bg);
-    box-shadow: none;
-    overflow: hidden;
-  }
-
-  .cover-inner {
+    gap: 0.5rem;
+    padding: 2.5rem;
     text-align: center;
-    padding: 2rem;
-    max-width: 360px;
   }
-
-  .cover-photo {
-    width: 130px;
-    height: 130px;
-    border-radius: 50%;
-    object-fit: cover;
-    object-position: 25% 30%;
-    border: 2px solid rgba(196, 120, 58, 0.45);
-    margin: 0 auto 1.75rem;
-  }
-
-  .cover-name {
-    font-family: var(--font-heading);
-    font-size: clamp(26px, 3.5vw, 40px);
-    font-weight: 700;
-    color: var(--color-hero-text);
-    line-height: 1.2;
-    letter-spacing: -0.01em;
-  }
-
-  .cover-rule {
-    width: 28px;
-    height: 1px;
-    background: var(--color-accent-terra);
-    margin: 1.25rem auto;
-  }
-
-  .cover-tagline {
-    font-family: var(--font-body);
-    font-size: 15px;
-    font-style: italic;
-    font-weight: 400;
-    color: #d4c8a8;
-    line-height: 1.75;
-  }
-
-  .cover-hint {
+  .placeholder-label {
     font-family: var(--font-ui);
     font-size: 11px;
-    letter-spacing: 0.1em;
-    color: rgba(184, 168, 130, 0.5);
-    margin-top: 2.5rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #8a7560;
+  }
+  .placeholder-hint {
+    font-family: var(--font-ui);
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    color: #a09080;
   }
 
-  /* ── Text pages (About, Work, Contact) ── */
-  .text-page {
-    padding: 3rem 2.5rem 4rem;
+  /* ─────────────────────────────────────────── HERO ─────────────────────────────────────────── */
+  .hero {
+    display: grid;
+    grid-template-columns: 44fr 56fr;
+    height: 100dvh;
   }
 
-  .page-header {
+  .hero-left {
+    background: var(--color-bg);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 2.75rem 3rem;
+  }
+
+  .hero-nav {
+    display: flex;
+    gap: 2.25rem;
+    flex-wrap: wrap;
+  }
+  .hero-nav a {
+    font-family: var(--font-ui);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-ink-light);
+    text-decoration: none;
+    padding-bottom: 2px;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .hero-nav a:hover {
+    color: var(--color-ink);
+    border-bottom-color: var(--color-ink);
+  }
+
+  .hero-identity { display: flex; flex-direction: column; gap: 0.75rem; }
+
+  .hero-name {
+    font-family: var(--font-heading);
+    font-size: clamp(40px, 5vw, 68px);
+    font-weight: 700;
+    color: var(--color-ink);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+
+  .hero-role {
+    font-family: var(--font-ui);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-ink-light);
+  }
+
+  .hero-bottom { padding-bottom: 0.5rem; }
+
+  .hero-eyebrow {
+    font-family: var(--font-ui);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-ink-light);
+    margin-bottom: 0.5rem;
+  }
+
+  .hero-script {
+    font-family: var(--script);
+    font-size: clamp(38px, 4.5vw, 60px);
+    font-weight: 600;
+    color: var(--color-ink);
+    line-height: 1.15;
+  }
+
+  .hero-right {
+    position: relative;
+    overflow: hidden;
+    background: var(--color-hero-bg);
+  }
+  .hero-right img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+  }
+
+  /* ──────────────────────────────────────── INDEX NAV ────────────────────────────────────────── */
+  .index-nav {
+    background: var(--color-hero-bg);
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 4rem;
+    padding: 5rem 4rem 5rem 3.5rem;
+    align-items: center;
+    min-height: 80vh;
+  }
+
+  .index-left { display: flex; flex-direction: column; gap: 1.25rem; }
+
+  .index-wordmark {
+    font-family: var(--font-ui);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255, 248, 212, 0.75);
+    line-height: 2;
+  }
+
+  .index-descriptor {
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-style: italic;
+    color: rgba(255, 248, 212, 0.55);
+    line-height: 1.7;
+    max-width: 240px;
+  }
+
+  .index-links {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .index-link {
     display: flex;
     align-items: baseline;
-    gap: 0.9rem;
-    padding-bottom: 1.5rem;
-    margin-bottom: 2rem;
-    border-bottom: 1px solid var(--color-border);
+    justify-content: space-between;
+    padding: 1.5rem 0;
+    border-top: 1px solid rgba(255, 248, 212, 0.1);
+    text-decoration: none;
+    transition: opacity 0.2s;
   }
+  .index-link:last-child { border-bottom: 1px solid rgba(255, 248, 212, 0.1); }
+  .index-link:hover { opacity: 0.6; }
 
-  .chapter-num {
+  .index-link-title {
     font-family: var(--font-heading);
-    font-size: 13px;
+    font-size: clamp(52px, 7vw, 96px);
+    font-weight: 400;
+    color: var(--color-hero-text);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .index-link--terra .index-link-title {
     font-style: italic;
-    color: var(--color-ink-light);
-    opacity: 0.55;
-    min-width: 1.2rem;
+    color: var(--color-accent-terra);
   }
 
-  .chapter-title {
+  .index-link-num {
+    font-family: var(--font-ui);
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    color: rgba(255, 248, 212, 0.25);
+    flex-shrink: 0;
+    padding-left: 1rem;
+  }
+
+  /* ─────────────────────────────────────────── ABOUT ────────────────────────────────────────── */
+  .about {
+    display: grid;
+    grid-template-columns: 45fr 55fr;
+    min-height: 90vh;
+  }
+
+  .about-photo {
+    overflow: hidden;
+    background: var(--color-hero-bg);
+  }
+  .about-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+  }
+
+  .about-content {
+    background: var(--color-bg);
+    padding: 5rem 4rem 5rem 3.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .about-heading {
     font-family: var(--font-heading);
-    font-size: clamp(22px, 2.8vw, 30px);
+    font-size: clamp(32px, 3.5vw, 52px);
     font-weight: 700;
     color: var(--color-ink);
     line-height: 1.2;
+    margin-bottom: 2.5rem;
+  }
+  .about-heading em {
+    font-weight: 400;
+    color: var(--color-ink-light);
   }
 
-  .page-body {
+  .about-body {
     display: flex;
     flex-direction: column;
     gap: 1.4rem;
@@ -528,192 +554,432 @@ import Base from '../layouts/Base.astro';
     font-size: 16px;
     color: var(--color-ink);
     line-height: 1.85;
+    margin-bottom: 3rem;
   }
 
-  .pull-quote {
-    font-family: var(--font-heading);
-    font-size: clamp(18px, 2.2vw, 22px);
-    font-style: italic;
-    font-weight: 400;
-    color: var(--color-ink);
-    border-left: 3px solid var(--color-accent-terra);
-    padding: 0.25rem 0 0.25rem 1.25rem;
-    margin: 0.25rem 0;
-    line-height: 1.55;
-    quotes: none;
-  }
-
-  /* ── Project pages ── */
-  .project-page {
+  .about-details {
     display: flex;
     flex-direction: column;
-    overflow-y: auto;
-    overscroll-behavior: contain;
-    height: 100%;
+    gap: 0;
+    border-top: 1px solid var(--color-border);
+  }
+  .about-detail {
+    display: flex;
+    gap: 1.5rem;
+    padding: 0.9rem 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .detail-label {
+    font-family: var(--font-ui);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-ink-light);
+    min-width: 80px;
+    padding-top: 2px;
+  }
+  .detail-value {
+    font-family: var(--font-body);
+    font-size: 14px;
+    color: var(--color-ink);
+    line-height: 1.5;
   }
 
-  .project-frontispiece {
-    width: 100%;
-    height: 240px;
-    flex-shrink: 0;
+  /* ──────────────────────────────── PROJECTS BANNER ──────────────────────────────────────────── */
+  .projects-banner {
+    background: var(--color-ink);
+    padding: 4rem 3.5rem 3.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .projects-heading {
+    font-family: var(--font-heading);
+    font-size: clamp(44px, 6vw, 80px);
+    font-weight: 700;
+    color: var(--color-hero-text);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+  .projects-heading em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--color-accent-terra);
+  }
+
+  /* ────────────────────────────── PROJECT FEATURES ───────────────────────────────────────────── */
+  .project-feature {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 72vh;
+  }
+
+  .project-feature--dark { background: var(--color-hero-bg); }
+  .project-feature--cream { background: #FFF8D4; }
+
+  .project-feature-visual {
     overflow: hidden;
-    background: var(--color-surface);
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
-
-  .project-frontispiece img {
+  .project-feature-visual img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: top center;
+    display: block;
   }
 
-  .project-frontispiece--app {
-    background: #f8f4ef;
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
+  .project-feature--dark .project-feature-visual {
+    background: #252c3a;
   }
-
-  .project-frontispiece--app img {
+  .project-feature--dark .project-feature-visual img {
     object-fit: contain;
-    object-position: top center;
+    padding: 3rem;
   }
 
-  .project-frontispiece--photo img {
-    object-position: center center;
+  .project-feature-visual--screens {
+    background: #e5ead8;
+    padding: 3rem 2rem;
   }
 
-  .project-body {
-    padding: 2rem 2.5rem 3rem;
+  .screens-stack {
+    position: relative;
+    width: 320px;
+    height: 460px;
+    margin: 0 auto;
+  }
+  .screen {
+    position: absolute;
+    width: 200px;
+    border-radius: 20px;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.18);
+    object-fit: cover;
+    background: #fff;
+  }
+  .screen-back {
+    left: 0;
+    top: 50px;
+    transform: rotate(-5deg);
+    z-index: 1;
+    opacity: 0.85;
+  }
+  .screen-front {
+    left: 60px;
+    top: 0;
+    z-index: 3;
+  }
+  .screen-far {
+    left: 120px;
+    top: 50px;
+    transform: rotate(5deg);
+    z-index: 1;
+    opacity: 0.85;
+  }
+
+  .project-feature-body {
     display: flex;
     flex-direction: column;
-    gap: 0.7rem;
-    flex: 1;
+    justify-content: center;
+    padding: 4rem 3.5rem;
+    gap: 1.25rem;
   }
 
   .project-tag {
     font-family: var(--font-ui);
     font-size: 10px;
-    font-weight: 500;
-    letter-spacing: 0.14em;
+    font-weight: 600;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: var(--color-accent-terra);
+    color: rgba(255, 248, 212, 0.45);
   }
+  .project-tag--olive { color: var(--color-accent-olive); }
 
-  .project-title {
+  .project-feature-title {
     font-family: var(--font-heading);
-    font-size: clamp(22px, 2.8vw, 30px);
+    font-size: clamp(40px, 5.5vw, 72px);
     font-weight: 700;
-    color: var(--color-ink);
-    line-height: 1.2;
+    color: var(--color-hero-text);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
   }
+  .project-feature-title--dark { color: var(--color-ink); }
 
-  .project-desc {
+  .project-feature-desc {
     font-family: var(--font-body);
     font-size: 16px;
-    color: var(--color-ink-light);
+    color: rgba(255, 248, 212, 0.7);
     line-height: 1.8;
-    flex: 1;
+    max-width: 420px;
   }
+  .project-feature-desc--dark { color: var(--color-ink-light); }
 
   .project-cta {
     display: inline-block;
-    margin-top: 0.75rem;
-    font-family: var(--font-ui);
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--color-accent-terra);
-    text-decoration: none;
-    transition: text-decoration 0.15s;
-  }
-  .project-cta:hover { text-decoration: underline; }
-
-  .project-cta-disabled {
-    display: inline-block;
-    margin-top: 0.75rem;
-    font-family: var(--font-ui);
-    font-size: 13px;
-    color: var(--color-ink-light);
-    opacity: 0.6;
-  }
-
-  /* ── Work page ── */
-  .work-intro {
+    margin-top: 0.5rem;
     font-family: var(--font-ui);
     font-size: 12px;
-    color: var(--color-ink-light);
-    letter-spacing: 0.03em;
-    margin-bottom: 1.75rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-accent-terra);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    padding-bottom: 2px;
+    transition: border-color 0.2s;
+    align-self: flex-start;
+  }
+  .project-cta:hover { border-bottom-color: var(--color-accent-terra); }
+  .project-cta--dark { color: var(--color-accent-olive); }
+  .project-cta--dark:hover { border-bottom-color: var(--color-accent-olive); }
+
+  /* ────────────────────────────────── PROJECT PAIR ───────────────────────────────────────────── */
+  .project-pair {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
   }
 
-  .work-list {
+  .project-card {
+    background: var(--card-bg, #2a2218);
     display: flex;
     flex-direction: column;
+  }
+
+  .project-card-visual {
+    height: 300px;
+    overflow: hidden;
+    background: rgba(0,0,0,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .project-card-visual img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 2.5rem;
+    display: block;
+  }
+  .project-card-visual--photo img {
+    object-fit: cover;
+    padding: 0;
+  }
+
+  .project-card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 2.25rem 2.5rem 3rem;
+    flex: 1;
+    border-top: 1px solid rgba(255, 248, 212, 0.08);
+  }
+
+  .project-card-title {
+    font-family: var(--font-heading);
+    font-size: clamp(22px, 2.5vw, 30px);
+    font-weight: 700;
+    color: var(--color-hero-text);
+    line-height: 1.2;
+  }
+
+  .project-card-desc {
+    font-family: var(--font-body);
+    font-size: 14px;
+    color: rgba(255, 248, 212, 0.55);
+    line-height: 1.75;
+    flex: 1;
+  }
+
+  .project-cta-muted {
+    display: inline-block;
+    margin-top: 0.25rem;
+    font-family: var(--font-ui);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255, 248, 212, 0.25);
+  }
+
+  /* ──────────────────────────────── PRODUCT WORK ─────────────────────────────────────────────── */
+  .work {
+    background: var(--color-hero-bg);
+    padding: 5rem 3.5rem 6rem;
+  }
+
+  .work-top {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    margin-bottom: 4rem;
+    align-items: start;
+  }
+
+  .work-heading {
+    font-family: var(--font-heading);
+    font-size: clamp(36px, 4.5vw, 60px);
+    font-weight: 700;
+    color: var(--color-hero-text);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.25rem;
+  }
+  .work-heading em {
+    font-weight: 400;
+    font-style: italic;
+    color: var(--color-accent-terra);
+  }
+
+  .work-intro {
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-style: italic;
+    color: rgba(255, 248, 212, 0.4);
+    line-height: 1.7;
+  }
+
+  .work-photo {
+    min-height: 260px;
+    border-color: rgba(255, 248, 212, 0.15);
+    background: rgba(163, 176, 135, 0.08);
+  }
+  .work-photo .placeholder-label { color: rgba(255, 248, 212, 0.35); }
+  .work-photo .placeholder-hint  { color: rgba(255, 248, 212, 0.2); }
+
+  .work-entries {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid rgba(255, 248, 212, 0.1);
   }
 
   .work-entry {
-    padding: 1.25rem 0 1.25rem 1.25rem;
-    border-left: 2px solid var(--color-border);
+    display: grid;
+    grid-template-columns: 60px 1fr;
+    gap: 2rem;
+    padding: 2.25rem 0;
+    border-bottom: 1px solid rgba(255, 248, 212, 0.1);
+    align-items: start;
+  }
+
+  .work-num {
+    font-family: var(--font-ui);
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    color: rgba(255, 248, 212, 0.2);
+    padding-top: 4px;
+  }
+
+  .work-entry-body {
     display: flex;
     flex-direction: column;
-    gap: 0.35rem;
+    gap: 0.4rem;
   }
 
-  .work-entry + .work-entry {
-    border-top: 1px solid var(--color-border);
-  }
-
-  .work-employer {
+  .work-team {
     font-family: var(--font-ui);
     font-size: 10px;
-    font-weight: 500;
-    letter-spacing: 0.12em;
+    font-weight: 600;
+    letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: var(--color-ink-light);
+    color: var(--color-accent-terra);
   }
 
   .work-title {
     font-family: var(--font-heading);
-    font-size: 17px;
+    font-size: clamp(18px, 2vw, 22px);
     font-weight: 700;
-    color: var(--color-ink);
+    color: var(--color-hero-text);
     line-height: 1.25;
   }
 
   .work-desc {
     font-family: var(--font-body);
     font-size: 14px;
-    color: var(--color-ink-light);
-    line-height: 1.7;
+    color: rgba(255, 248, 212, 0.5);
+    line-height: 1.75;
+    max-width: 640px;
+    margin-top: 0.25rem;
   }
 
-  /* ── Contact page ── */
-  .contact-intro {
-    font-family: var(--font-body);
-    font-size: 16px;
+  /* ─────────────────────────────────────── CONTACT ───────────────────────────────────────────── */
+  .contact {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 80vh;
+    background: var(--color-bg);
+  }
+
+  .contact-left {
+    background: var(--color-surface);
+    padding: 5rem 3.5rem;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid var(--color-border);
+  }
+
+  .contact-heading {
+    font-family: var(--font-heading);
+    font-size: clamp(52px, 7vw, 96px);
+    font-weight: 700;
     color: var(--color-ink);
-    line-height: 1.8;
-    margin-bottom: 2rem;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.5rem;
+  }
+
+  .contact-script {
+    font-family: var(--script);
+    font-weight: 600;
+    font-size: clamp(64px, 9vw, 120px);
+    color: var(--color-accent-terra);
+    display: block;
+    line-height: 0.9;
+    letter-spacing: normal;
+  }
+
+  .contact-subhead {
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-style: italic;
+    color: var(--color-ink-light);
+    line-height: 1.75;
+    max-width: 360px;
+    margin-bottom: 2.5rem;
+  }
+
+  .contact-photo {
+    flex: 1;
+    min-height: 200px;
+  }
+
+  .contact-right {
+    padding: 5rem 3.5rem;
+    display: flex;
+    align-items: center;
+    background: var(--color-bg);
   }
 
   .contact-form {
     display: flex;
     flex-direction: column;
-    gap: 1.25rem;
-    max-width: 460px;
+    gap: 1.5rem;
+    width: 100%;
+    max-width: 480px;
   }
 
   .form-group {
     display: flex;
     flex-direction: column;
-    gap: 0.35rem;
+    gap: 0.4rem;
   }
 
   .form-label {
     font-family: var(--font-ui);
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.1em;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
     text-transform: uppercase;
     color: var(--color-ink-light);
   }
@@ -722,19 +988,19 @@ import Base from '../layouts/Base.astro';
     background: var(--color-surface);
     border: 1px solid var(--color-border);
     border-radius: 2px;
-    padding: 10px 12px;
+    padding: 11px 14px;
     font-family: var(--font-body);
     font-size: 15px;
     color: var(--color-ink);
     width: 100%;
-    transition: border-color 0.2s;
     outline: none;
+    transition: border-color 0.2s;
   }
   .form-input:focus { border-color: var(--color-ink-light); }
 
   .form-textarea {
     resize: vertical;
-    min-height: 120px;
+    min-height: 130px;
   }
 
   .form-submit {
@@ -742,92 +1008,209 @@ import Base from '../layouts/Base.astro';
     background: var(--color-ink);
     color: var(--color-hero-text);
     font-family: var(--font-ui);
-    font-size: 13px;
-    font-weight: 500;
-    letter-spacing: 0.05em;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
     border: none;
     border-radius: 2px;
-    padding: 10px 24px;
+    padding: 12px 28px;
     cursor: pointer;
-    transition: opacity 0.2s;
+    transition: background 0.2s;
   }
-  .form-submit:hover { opacity: 0.85; }
+  .form-submit:hover { background: var(--color-accent-terra); }
   .form-submit:focus-visible {
     outline: 2px solid var(--color-accent-terra);
     outline-offset: 3px;
   }
 
-  /* ── Mobile: vertical accordion ── */
-  @media (max-width: 700px) {
-    .shelf {
-      flex-direction: column;
-      height: auto;
-      min-height: 100dvh;
-      overflow: visible;
-      gap: 0;
-    }
+  /* ─────────────────────────────────────── FOOTER ────────────────────────────────────────────── */
+  .site-footer {
+    background: var(--color-ink);
+    padding: 2.25rem 3.5rem;
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+    flex-wrap: wrap;
+  }
 
-    .book {
-      flex-direction: column;
-      width: 100% !important;
-      height: auto;
-      overflow: visible;
-      transition: none;
-      flex-shrink: 1;
-    }
+  .footer-name {
+    font-family: var(--font-ui);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255, 248, 212, 0.7);
+  }
 
-    .book-spine {
-      writing-mode: horizontal-tb;
-      transform: none;
-      width: 100%;
-      height: 56px;
-      text-align: left;
-      padding: 0 1.5rem;
-      font-size: 14px;
-      box-shadow: none;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.25);
-    }
+  .footer-copy {
+    font-family: var(--font-ui);
+    font-size: 11px;
+    color: rgba(255, 248, 212, 0.3);
+    letter-spacing: 0.06em;
+  }
 
-    .book-spine::before,
-    .book-spine::after { display: none; }
+  .footer-links {
+    display: flex;
+    gap: 1.75rem;
+    margin-left: auto;
+  }
 
-    .book-page {
-      transform: none !important;
-      max-height: 0;
-      height: auto;
-      overflow: hidden;
-      visibility: visible;
-      opacity: 0;
-      pointer-events: none;
-      box-shadow: none;
-      transition:
-        max-height 420ms ease,
-        opacity 280ms ease;
-    }
+  .footer-links a {
+    font-family: var(--font-ui);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255, 248, 212, 0.45);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: rgba(255, 248, 212, 0.9); }
 
-    .book[data-open="true"] .book-page {
-      max-height: 2400px;
-      opacity: 1;
-      pointer-events: auto;
-      transition:
-        max-height 420ms ease,
-        opacity 280ms ease 120ms;
-    }
+  /* ──────────────────────────────────── NSF CAROUSEL ────────────────────────────────────────── */
+  .nsf-carousel {
+    position: relative;
+    margin-top: 0.5rem;
+  }
 
-    .cover-page {
-      min-height: 60vh;
-    }
+  .nsf-grid {
+    display: flex;
+    overflow-x: hidden;
+    gap: 6px;
+    scroll-behavior: smooth;
+  }
 
-    .text-page {
-      padding: 2rem 1.5rem 3rem;
-    }
+  .nsf-card {
+    position: relative;
+    flex: 0 0 calc(50% - 3px);
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    text-decoration: none;
+    display: block;
+  }
+  .nsf-card:hover .nsf-card-img { transform: scale(1.04); }
 
-    .project-frontispiece {
-      height: 200px;
-    }
+  .nsf-card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+  .nsf-card-img--placeholder {
+    background: #252c3a;
+  }
 
-    .project-body {
-      padding: 1.5rem 1.5rem 2.5rem;
+  .nsf-card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(20, 24, 36, 0.92) 0%, rgba(20, 24, 36, 0.3) 55%, transparent 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 1rem 1rem;
+    gap: 0.3rem;
+  }
+
+  .nsf-card-date {
+    font-family: var(--font-ui);
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-accent-terra);
+  }
+
+  .nsf-card-title {
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--color-hero-text);
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .nsf-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+    background: rgba(20, 24, 36, 0.7);
+    color: rgba(255, 248, 212, 0.9);
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+    backdrop-filter: blur(4px);
+  }
+  .nsf-arrow:hover { background: rgba(20, 24, 36, 0.95); }
+  .nsf-arrow--prev { left: 6px; }
+  .nsf-arrow--next { right: 6px; }
+
+  @media (max-width: 800px) {
+    .nsf-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      overflow-x: visible;
     }
+    .nsf-card {
+      flex: none;
+      aspect-ratio: 3 / 4;
+    }
+    .nsf-arrow { display: none; }
+  }
+
+  /* ───────────────────────────────────────── MOBILE ──────────────────────────────────────────── */
+  @media (max-width: 800px) {
+    .hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-left { padding: 2rem; min-height: 55vh; }
+    .hero-right { height: 60vw; min-height: 280px; }
+
+    .index-nav {
+      grid-template-columns: 1fr;
+      padding: 3.5rem 2rem;
+      min-height: auto;
+      gap: 2.5rem;
+    }
+    .index-link-title { font-size: clamp(40px, 12vw, 64px); }
+
+    .about { grid-template-columns: 1fr; min-height: auto; }
+    .about-photo { height: 70vw; min-height: 260px; }
+    .about-content { padding: 3rem 2rem; }
+
+    .project-feature { grid-template-columns: 1fr; min-height: auto; }
+    .project-feature-visual { height: 60vw; min-height: 240px; }
+    .project-feature--dark .project-feature-visual img { padding: 2rem; }
+    .project-feature-body { padding: 2.5rem 2rem; }
+    .project-feature-visual--screens { padding: 2.5rem 1.5rem; min-height: 320px; }
+    .screens-stack { width: 260px; height: 360px; }
+    .screen { width: 160px; }
+
+    .project-pair { grid-template-columns: 1fr; }
+    .project-card-visual { height: 50vw; min-height: 220px; }
+
+    .work { padding: 3.5rem 2rem 4rem; }
+    .work-top { grid-template-columns: 1fr; gap: 2rem; }
+    .work-photo { min-height: 200px; }
+
+    .contact { grid-template-columns: 1fr; min-height: auto; }
+    .contact-left { padding: 3.5rem 2rem; border-right: none; border-bottom: 1px solid var(--color-border); }
+    .contact-photo { min-height: 180px; }
+    .contact-right { padding: 3rem 2rem; }
+
+    .projects-banner { padding: 3rem 2rem; }
+
+    .site-footer { padding: 2rem; gap: 1.25rem; }
+    .footer-links { margin-left: 0; }
   }
 </style>
