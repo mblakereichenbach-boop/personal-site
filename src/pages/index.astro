@@ -1,26 +1,5 @@
 ---
 import Base from '../layouts/Base.astro';
-
-interface RSSPost { title: string; link: string; date: string; thumb: string; }
-
-function decodeEntities(s: string) {
-  return s.replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>')
-          .replace(/&quot;/g, '"').replace(/&#39;|&#x27;/g, "'");
-}
-
-let recentPosts: RSSPost[] = [];
-try {
-  const xml = await fetch('https://rss.beehiiv.com/feeds/9kSd0Ruqsj.xml').then(r => r.text());
-  recentPosts = (xml.match(/<item>[\s\S]*?<\/item>/g) ?? []).slice(0, 4).map(item => {
-    const raw   = item.match(/<title>([\s\S]*?)<\/title>/)?.[1]?.trim() ?? '';
-    const title = decodeEntities(raw).replace(/\s*\|.*$/, '');
-    const link  = item.match(/<link>([\s\S]*?)<\/link>/)?.[1]?.trim() ?? '';
-    const pub   = item.match(/<pubDate>([\s\S]*?)<\/pubDate>/)?.[1]?.trim() ?? '';
-    const date  = pub ? new Date(pub).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '';
-    const thumb = item.match(/<enclosure url="([^"]+)"/)?.[1]?.trim() ?? '';
-    return { title, link, date, thumb };
-  });
-} catch { /* fail silently */ }
 ---
 
 <Base>
@@ -87,7 +66,7 @@ try {
       </h2>
       <div class="about-body">
         <p>I'm innately curious — about ideas, about people, about why things work the way they do and how they could work better. That curiosity isn't a hobby; it's the thread running through everything I do.</p>
-        <p>It's what pulled me into tech in the first place. Curiosity about marketers — how they think, what they're actually trying to do, where their tools fail them — is what made me a good PM. I've spent my career on zero-to-one launches at HubSpot, building products used by millions, because I can't stop asking what's missing and what's possible.</p>
+        <p>It's what pulled me into tech in the first place. Curiosity about marketers — how they think, what they're actually trying to do, where their tools fail them — is what made me a good PM. I spent years on zero-to-one launches at HubSpot, building products used by millions, and now bring that same instinct to Alignable, where I work on tools that help small business owners connect and grow.</p>
         <p>The same impulse drives my writing. Curiosity about storytelling, about identity and place and the stories we inherit — that's what makes me a writer. And curiosity about how to translate my interests into something useful for other people is what led me to build PRactical and start Non-Slop Fun.</p>
         <p>I follow the rabbit holes. I pick things apart. Then I build something better.</p>
       </div>
@@ -98,7 +77,7 @@ try {
         </div>
         <div class="about-detail">
           <span class="detail-label">Day job</span>
-          <span class="detail-value">Product Manager · HubSpot</span>
+          <span class="detail-value">Senior Product Manager · Alignable</span>
         </div>
         <div class="about-detail">
           <span class="detail-label">Building</span>
@@ -123,27 +102,7 @@ try {
       <span class="project-tag">Newsletter</span>
       <h3 class="project-feature-title">Non-Slop<br/>Fun</h3>
       <p class="project-feature-desc">Reflection is resistance. Creative and cultural commentary about the things worth examining — and a celebration of the well-examined life.</p>
-      {recentPosts.length > 0 && (
-        <div class="nsf-carousel">
-          <button class="nsf-arrow nsf-arrow--prev" aria-label="Previous posts" type="button">&#8592;</button>
-          <div class="nsf-grid">
-            {recentPosts.map(post => (
-              <a href={post.link} class="nsf-card" target="_blank" rel="noopener noreferrer">
-                {post.thumb ? (
-                  <img src={post.thumb} alt={post.title} class="nsf-card-img" />
-                ) : (
-                  <div class="nsf-card-img nsf-card-img--placeholder" />
-                )}
-                <div class="nsf-card-overlay">
-                  <span class="nsf-card-date">{post.date}</span>
-                  <span class="nsf-card-title">{post.title}</span>
-                </div>
-              </a>
-            ))}
-          </div>
-          <button class="nsf-arrow nsf-arrow--next" aria-label="Next posts" type="button">&#8594;</button>
-        </div>
-      )}
+      <div id="nsf-carousel-container"></div>
       <a href="https://www.nonslopfun.com" class="project-cta" target="_blank" rel="noopener noreferrer">Read it →</a>
     </div>
   </div>
@@ -197,8 +156,8 @@ try {
       <div class="work-left">
         <div class="work-header">
           <span class="stamp stamp--light">03 — Product Work</span>
-          <h2 class="work-heading">Selected<br/><em>HubSpot work.</em></h2>
-          <p class="work-intro">Zero-to-one launches. Platform scale. Products used by millions.</p>
+          <h2 class="work-heading">Selected<br/><em>past work.</em></h2>
+          <p class="work-intro">Zero-to-one launches at HubSpot. Platform scale. Products used by millions.</p>
         </div>
         <div class="work-entries">
           <div class="work-entry">
@@ -290,14 +249,69 @@ try {
   </footer>
 
 <script>
-  document.querySelectorAll('.nsf-carousel').forEach(carousel => {
-    const grid = carousel.querySelector('.nsf-grid');
-    const prev = carousel.querySelector('.nsf-arrow--prev');
-    const next = carousel.querySelector('.nsf-arrow--next');
-    const step = () => (grid.querySelector('.nsf-card')?.offsetWidth ?? 200) + 6;
-    prev.addEventListener('click', () => grid.scrollBy({ left: -step(), behavior: 'smooth' }));
-    next.addEventListener('click', () => grid.scrollBy({ left:  step(), behavior: 'smooth' }));
-  });
+  function wireCarousel(root) {
+    root.querySelectorAll('.nsf-carousel').forEach(carousel => {
+      const grid = carousel.querySelector('.nsf-grid');
+      const prev = carousel.querySelector('.nsf-arrow--prev');
+      const next = carousel.querySelector('.nsf-arrow--next');
+      const step = () => (grid.querySelector('.nsf-card')?.offsetWidth ?? 200) + 6;
+      prev.addEventListener('click', () => grid.scrollBy({ left: -step(), behavior: 'smooth' }));
+      next.addEventListener('click', () => grid.scrollBy({ left:  step(), behavior: 'smooth' }));
+    });
+  }
+
+  async function loadNSFPosts() {
+    try {
+      const res = await fetch('/.netlify/functions/rss-proxy');
+      if (!res.ok) return;
+      const xml = await res.text();
+
+      function decodeEntities(s) {
+        return s.replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>')
+                .replace(/&quot;/g, '"').replace(/&#39;|&#x27;/g, "'");
+      }
+
+      const items = (xml.match(/<item>[\s\S]*?<\/item>/g) ?? []).slice(0, 4).map(item => {
+        const raw   = item.match(/<title>([\s\S]*?)<\/title>/)?.[1]?.trim() ?? '';
+        const title = decodeEntities(raw).replace(/\s*\|.*$/, '');
+        const link  = item.match(/<link>([\s\S]*?)<\/link>/)?.[1]?.trim() ?? '';
+        const pub   = item.match(/<pubDate>([\s\S]*?)<\/pubDate>/)?.[1]?.trim() ?? '';
+        const date  = pub ? new Date(pub).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '';
+        const thumb = item.match(/<enclosure url="([^"]+)"/)?.[1]?.trim() ?? '';
+        return { title, link, date, thumb };
+      });
+
+      if (items.length === 0) return;
+
+      const container = document.getElementById('nsf-carousel-container');
+      if (!container) return;
+
+      container.innerHTML = `
+        <div class="nsf-carousel">
+          <button class="nsf-arrow nsf-arrow--prev" aria-label="Previous posts" type="button">&#8592;</button>
+          <div class="nsf-grid">
+            ${items.map(post => `
+              <a href="${post.link}" class="nsf-card" target="_blank" rel="noopener noreferrer">
+                ${post.thumb
+                  ? `<img src="${post.thumb}" alt="${post.title.replace(/"/g, '&quot;')}" class="nsf-card-img" />`
+                  : `<div class="nsf-card-img nsf-card-img--placeholder"></div>`
+                }
+                <div class="nsf-card-overlay">
+                  <span class="nsf-card-date">${post.date}</span>
+                  <span class="nsf-card-title">${post.title}</span>
+                </div>
+              </a>
+            `).join('')}
+          </div>
+          <button class="nsf-arrow nsf-arrow--next" aria-label="Next posts" type="button">&#8594;</button>
+        </div>
+      `;
+
+      wireCarousel(container);
+    } catch { /* fail silently */ }
+  }
+
+  loadNSFPosts();
 </script>
 </Base>
 
